@@ -1,0 +1,15 @@
+.idea/
+__pycache__/
+
+install/
+my_settings*.py
+
+media/images/users
+
+*.log
+
+*.pickle
+*.json
+*.sql
+*.csv
+
