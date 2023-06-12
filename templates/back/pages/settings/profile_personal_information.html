@@ -1,0 +1,154 @@
+{% load static %}
+
+<!--begin::Form-->
+<form class="profile-form form" novalidate="novalidate" id="kt_personal_information_form" method="post" enctype="multipart/form-data" action="/back/settings/profile/">
+    {% csrf_token %}
+    <input type="hidden" name="request_class" value="personal-information">
+    <!--begin::Header-->
+    <div class="card-header py-3">
+        <div class="card-title align-items-start flex-column">
+            <h3 class="card-label font-weight-bolder text-dark">Personal Information</h3>
+            <span class="text-muted font-weight-bold font-size-sm mt-1">Update your personal information</span>
+        </div>
+        <div class="card-toolbar">
+            <button class="btn btn-success mr-2" id="kt_personal_information_form_submit_button">Save Changes</button>
+            <button type="reset" class="btn btn-secondary">Cancel</button>
+        </div>
+    </div>
+    <!--end::Header-->
+    <!--begin::Body-->
+    <div class="card-body">
+        <div class="form-group row">
+            <div class="col-sm-1"></div>
+            <label class="col-form-label col-sm-4 max-w-130px px-0">Avatar</label>
+            <div class="col-sm-7">
+                <div class="image-input {% if not user.profile.avatar %}image-input-empty{% endif %} image-input-outline image-input-circle" id="kt_profile_avatar"
+                     style="background-image: url({% static 'metronic/media/users/blank.png' %})">
+                    {% if not user.profile.avatar %}
+                        <div class="image-input-wrapper"></div>
+                    {% else %}
+                        <div class="image-input-wrapper" style="background-image: url({{ user.profile.avatar.url }})"></div>
+                    {% endif %}
+                    <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
+                        <i class="fa fa-pen icon-sm text-muted"></i>
+                        <input type="file" name="avatar" accept=".png, .jpg, .jpeg"/>
+                        <input type="hidden" name="avatar_remove"/>
+                    </label>
+                    <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
+                    <i class="ki ki-bold-close icon-xs text-muted"></i>
+                    </span>
+                    <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove avatar">
+                        <i class="ki ki-bold-close icon-xs text-muted"></i>
+                    </span>
+                </div>
+                <span class="form-text text-muted">Allowed file types: png, jpg, jpeg.</span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-1"></div>
+            <label class="col-form-label col-sm-4 max-w-130px px-0">First Name</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control form-control-lg form-control-solid" id="first_name" name="first_name" value="{{ user.first_name }}"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-1"></div>
+            <label class="col-form-label col-sm-4 max-w-130px px-0">Last Name</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control form-control-lg form-control-solid" id="last_name" name="last_name" value="{{ user.last_name }}"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-1"></div>
+            <label class="col-form-label col-sm-4 max-w-130px px-0">Email</label>
+            <div class="col-sm-7">
+                <div class="input-group input-group-lg input-group-solid">
+                    <!--<div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="la la-at"></i>
+                        </span>
+                    </div>-->
+                    <input type="text" class="form-control form-control-lg form-control-solid" id="email" name="email" value="{{ user.email }}" disabled/>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-1"></div>
+            <label class="col-form-label col-sm-4 max-w-130px px-0">Phone Number</label>
+            <div class="col-sm-7">
+                <div class="input-group input-group-lg input-group-solid">
+                    <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="la la-phone"></i>
+                    </span>
+                    </div>
+                    <input type="text" class="form-control form-control-lg form-control-solid" id="phone" name="phone" value="{{ user.profile.phone }}" placeholder="Phone Number"/>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-1"></div>
+            <label class="col-form-label col-sm-4 max-w-130px px-0">Date of Birth</label>
+            <div class="col-sm-7">
+                <div class="input-group input-group-solid date">
+                    {% if user.profile.birthday %}
+                        <input type="text" class="form-control datepicker" autocomplete="off" name="birthday" placeholder="January 1, 1950" value="{{ user.profile.birthday|date:'F j, Y' }}"/>
+                    {% else %}
+                        <input type="text" class="form-control datepicker" autocomplete="off" name="birthday" placeholder="January 1, 1950"/>
+                    {% endif %}
+                    <div class="input-group-append">
+                    <span class="input-group-text">
+                        <i class="la la-calendar"></i>
+                    </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-1"></div>
+            <label class="col-form-label col-sm-4 max-w-130px px-0">Gender</label>
+            <div class="col-sm-7">
+                <div class="radio-inline">
+                    <label class="radio">
+                        {% if user.profile.gender == 'Female' %}
+                            <input type="radio" name="gender" value="Female" checked/>
+                        {% else %}
+                            <input type="radio" name="gender" value="Female"/>
+                        {% endif %}
+                        <span></span>Female</label>
+                    <label class="radio">
+                        {% if user.profile.gender == 'Male' %}
+                            <input type="radio" name="gender" value="Male" checked/>
+                        {% else %}
+                            <input type="radio" name="gender" value="Male"/>
+                        {% endif %}
+                        <span></span>Male</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-1"></div>
+            <label class="col-form-label col-sm-4 max-w-130px px-0">Address</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control form-control-lg form-control-solid" id="address" name="address" value="{{ user.profile.address }}"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-1"></div>
+            <label class="col-form-label col-sm-4 max-w-130px px-0">Postal code</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control form-control-lg form-control-solid" id="postal_code" name="postal_code" value="{{ postal_code }}" disabled/>
+            </div>
+            <div class="d-none">
+                <input type="text" id="street_number" name="street_number" value="" disabled/>
+                <input type="text" id="route" name="route" value="" disabled/>
+                <input type="text" id="locality" name="city" value="" disabled/>
+                <input type="text" id="administrative_area_level_1" name="state" value="" disabled/>
+                <input type="text" id="country" name="country" value="" disabled/>
+            </div>
+        </div>
+    </div>
+    <!--end::Body-->
+</form>
+<!--end::Form-->

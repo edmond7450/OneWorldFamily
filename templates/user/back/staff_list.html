@@ -1,0 +1,109 @@
+{% extends 'back/layout.html' %}
+{% load static %}
+
+{% block title %}Employees{% endblock %}
+
+{% block content %}
+    <div class="d-flex flex-column-fluid">
+        <!--begin::Container-->
+        <div class="container">
+            <div class="d-flex flex-row">
+
+                <!--begin::Content-->
+                <div class="flex-row-fluid">
+                    <!--begin::Card-->
+                    <div class="card card-custom">
+                        <div class="card-header flex-wrap border-0 pt-6 pb-0 justify-content-between">
+                            <div class="card-title">
+                                <h3 class="card-label">Employee List
+                                    <span class="text-muted pt-2 font-size-sm d-block"></span></h3>
+                            </div>
+                            <div>
+                                <!--
+                                <a href="/user/staff/add" class="btn btn-primary font-weight-bolder"><i class="la la-plus"></i>New</a> -->
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <!--begin::Search Form-->
+                            <div class="mb-7">
+                                <div class="row align-items-center">
+                                    <div class="col-12">
+                                        <div class="row align-items-center">
+                                            <div class="col-12 col-xxl-3 col-xl-6 col-sm-6 my-2 my-xxl-0 my-xl-5">
+                                                <div class="d-flex align-items-center">
+                                                    <label class="mr-3 mb-0 d-none d-md-block">Search:</label>
+                                                    <div class="input-icon w-100">
+                                                        <input type="text" class="form-control" placeholder="Search..." id="kt_datatable_search_query"/>
+                                                        <span>
+                                                            <i class="flaticon2-search-1 text-muted"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-xxl-4 col-xl-6 col-sm-6 my-2 my-xxl-0 my-xl-5">
+                                                <div class="d-flex align-items-center">
+                                                    <label class="mr-3 mb-0 d-none d-md-block text-nowrap">Login Date:</label>
+                                                    <div class="input-daterange input-group" id="kt_last_login_datepicker">
+                                                        <input type="text" class="form-control" name="from_last_login" autocomplete="off"/>
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">
+                                                                <i class="la la-ellipsis-h"></i>
+                                                            </span>
+                                                        </div>
+                                                        <input type="text" class="form-control" name="to_last_login" autocomplete="off"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-xxl-4 col-xl-6 col-sm-6 my-2 my-xxl-0 my-xl-5">
+                                                <div class="d-flex align-items-center">
+                                                    <label class="mr-3 mb-0 d-none d-md-block text-nowrap">Next Billing<br/> Start Date:</label>
+                                                    <div class="input-daterange input-group" id="kt_membership_date_datepicker">
+                                                        <input type="text" class="form-control" name="from_membership_date" autocomplete="off"/>
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">
+                                                                <i class="la la-ellipsis-h"></i>
+                                                            </span>
+                                                        </div>
+                                                        <input type="text" class="form-control" name="to_membership_date" autocomplete="off"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end: Search Form-->
+                            <!--begin: Datatable-->
+                            <div class="datatable datatable-bordered datatable-head-custom" id="kt_datatable"></div>
+                            <!--end: Datatable-->
+                        </div>
+                    </div>
+                    <!--end::Card-->
+                </div>
+                <!--end::Content-->
+            </div>
+        </div>
+        <!--end::Container-->
+    </div>
+
+    {% include "user/back/profile.html" %}
+    {% include "user/back/staff_profile.html" %}
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+        var csrf_token = '{{ csrf_token }}';
+        var is_super = false;
+        {% if user.is_superuser %}
+            is_super = true;
+            var permissions = JSON.parse('{{ permission_list|safe }}');
+        {% endif %}
+    </script>
+
+    <script src="{% static 'metronic/js/pages/user/staff_list.js' %}?202212131640"></script>
+    <script src="{% static 'metronic/js/pages/user/profile.js' %}"></script>
+    <script src="{% static 'metronic/js/pages/user/staff_profile.js' %}"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;key={{ GOOGLE_MAPS_API_KEY }}"></script>
+    <script src="{% static 'metronic/js/pages/settings/profile_google_places.js' %}"></script>
+{% endblock %}

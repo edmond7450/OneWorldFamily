@@ -1,0 +1,74 @@
+{% load static %}
+
+<html lang="en">
+
+<!--begin::Head-->
+<head>
+    <base href="">
+    <meta charset="utf-8"/>
+    <title>SharpArchive</title>
+    <meta name="description" content="Singin page"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="canonical" href="https://keenthemes.com/metronic"/>
+
+    <!--begin::Fonts-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"/>
+    <!--end::Fonts-->
+
+    <!--begin::Page Custom Styles(used by this page)-->
+    <link href="{% static 'metronic/css/pages/login/login.css' %}" rel="stylesheet" type="text/css"/>
+    <!--end::Page Custom Styles-->
+
+    <!--begin::Global Theme Styles(used by all pages)-->
+    <link href="{% static 'metronic/plugins/global/plugins.bundle.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'metronic/plugins/custom/prismjs/prismjs.bundle.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'metronic/css/style.bundle.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'metronic/css/app.css' %}?202104051150" rel="stylesheet" type="text/css"/>
+    <!--end::Global Theme Styles-->
+
+    <!--begin::Layout Themes(used by all pages)-->
+    <link href="{% static 'metronic/css/themes/layout/header/base/dark.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'metronic/css/themes/layout/header/menu/dark.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'metronic/css/themes/layout/brand/dark.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'metronic/css/themes/layout/aside/dark.css' %}" rel="stylesheet" type="text/css"/>
+    <!--end::Layout Themes-->
+
+    <link rel="shortcut icon" href="{% static 'metronic/media/logos/favicon.png' %}"/>
+
+    {% block css %}{% endblock %}
+</head>
+<!--end::Head-->
+
+<!--begin::Body-->
+<body id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
+<!--begin::Main-->
+<div class="d-flex flex-column flex-root">
+    <!--begin::Login-->
+    {% block content %}{% endblock %}
+    <!--end::Login-->
+</div>
+
+<!--end::Main-->
+
+<script>
+    var HOST_URL = "https://preview.keenthemes.com/metronic/theme/html/tools/preview";
+</script>
+
+<!--begin::Global Config(global config for global JS scripts)-->
+<script src="{% static 'metronic/js/config.js' %}"></script>
+<!--end::Global Config-->
+
+<!--begin::Global Theme Bundle(used by all pages)-->
+<script src="{% static 'metronic/plugins/global/plugins.bundle.js' %}"></script>
+<script src="{% static 'metronic/plugins/custom/prismjs/prismjs.bundle.js' %}"></script>
+<script src="{% static 'metronic/js/scripts.bundle.js' %}"></script>
+
+<!--end::Global Theme Bundle-->
+
+{% block script %}{% endblock %}
+
+<!--end::Page Scripts-->
+</body>
+
+<!--end::Body-->
+</html>

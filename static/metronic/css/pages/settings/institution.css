@@ -1,0 +1,457 @@
+@font-face {
+    font-family: 'ProximaNovaThin';
+    src: url("//s3.amazonaws.com/MD_Assets/fonts/proxima-nova/thin.eot");
+    src: url("//s3.amazonaws.com/MD_Assets/fonts/proxima-nova/thin.eot?iefix") format("eot"), url("//s3.amazonaws.com/MD_Assets/fonts/proxima-nova/thin.woff") format("woff"), url("//s3.amazonaws.com/MD_Assets/fonts/proxima-nova/thin.ttf") format("truetype"), url("//s3.amazonaws.com/MD_Assets/fonts/proxima-nova/thin.svg#webfontFl2IlMVK") format("svg");
+    font-weight: normal;
+    font-style: normal
+}
+
+@font-face {
+    font-family: 'ProximaNovaLight';
+    src: url("//s3.amazonaws.com/MD_Assets/fonts/proxima-nova/light.eot");
+    src: url("//s3.amazonaws.com/MD_Assets/fonts/proxima-nova/light.eot?iefix") format("eot"), url("//s3.amazonaws.com/MD_Assets/fonts/proxima-nova/light.woff") format("woff"), url("//s3.amazonaws.com/MD_Assets/fonts/proxima-nova/light.ttf") format("truetype"), url("//s3.amazonaws.com/MD_Assets/fonts/proxima-nova/light.svg#webfontgjwfewia") format("svg");
+    font-weight: normal;
+    font-style: normal
+}
+
+@font-face {
+    font-family: 'ProximaNovaRegular';
+    src: url("//s3.amazonaws.com/MD_Assets/fonts/proxima-nova/regular.eot");
+    src: url("//s3.amazonaws.com/MD_Assets/fonts/proxima-nova/regular.eot?iefix") format("eot"), url("//s3.amazonaws.com/MD_Assets/fonts/proxima-nova/regular.woff") format("woff"), url("//s3.amazonaws.com/MD_Assets/fonts/proxima-nova/regular.ttf") format("truetype"), url("//s3.amazonaws.com/MD_Assets/fonts/proxima-nova/regular.svg#webfonttLdMzI8n") format("svg");
+    font-weight: normal;
+    font-style: normal
+}
+
+@font-face {
+    font-family: 'ProximaNovaRegularItalic';
+    src: url("//s3.amazonaws.com/MD_Assets/fonts/proxima-nova/italic.eot");
+    src: url("//s3.amazonaws.com/MD_Assets/fonts/proxima-nova/italic.eot?iefix") format("eot"), url("//s3.amazonaws.com/MD_Assets/fonts/proxima-nova/italic.woff") format("woff"), url("//s3.amazonaws.com/MD_Assets/fonts/proxima-nova/italic.ttf") format("truetype"), url("//s3.amazonaws.com/MD_Assets/fonts/proxima-nova/italic.svg#webfontjQHW7Ll4") format("svg");
+    font-weight: normal;
+    font-style: normal
+}
+
+@font-face {
+    font-family: 'ProximaNovaSemibold';
+    src: url("//s3.amazonaws.com/MD_Assets/fonts/proxima-nova/semibold.eot");
+    src: url("//s3.amazonaws.com/MD_Assets/fonts/proxima-nova/semibold.eot?iefix") format("eot"), url("//s3.amazonaws.com/MD_Assets/fonts/proxima-nova/semibold.woff") format("woff"), url("//s3.amazonaws.com/MD_Assets/fonts/proxima-nova/semibold.ttf") format("truetype"), url("//s3.amazonaws.com/MD_Assets/fonts/proxima-nova/semibold.svg#webfont0AWgWg75") format("svg");
+    font-weight: normal;
+    font-style: normal
+}
+
+/*html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {*/
+#mdWidget, #mdWidget div, #mdWidget span, #mdWidget object, #mdWidget iframe, #mdWidget h1, #mdWidget h2, #mdWidget h3, #mdWidget h4, #mdWidget h5, #mdWidget h6, #mdWidget p, #mdWidget blockquote, #mdWidget pre, #mdWidget abbr, #mdWidget address, #mdWidget cite, #mdWidget code, #mdWidget del, #mdWidget dfn, #mdWidget em, #mdWidget img, #mdWidget ins, #mdWidget kbd, #mdWidget q, #mdWidget samp, #mdWidget small, #mdWidget strong, #mdWidget sub, #mdWidget sup, #mdWidget var, #mdWidget b, #mdWidget i, #mdWidget dl, #mdWidget dt, #mdWidget dd, #mdWidget ol, #mdWidget ul, #mdWidget li, #mdWidget fieldset, #mdWidget form, #mdWidget label, #mdWidget legend, #mdWidget table, #mdWidget caption, #mdWidget tbody, #mdWidget tfoot, #mdWidget thead, #mdWidget tr, #mdWidget th, #mdWidget td, #mdWidget article, #mdWidget aside, #mdWidget canvas, #mdWidget details, #mdWidget figcaption, #mdWidget figure, #mdWidget footer, #mdWidget header, #mdWidget hgroup, #mdWidget menu, #mdWidget nav, #mdWidget section, #mdWidget summary, #mdWidget time, #mdWidget mark, #mdWidget audio, #mdWidget video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    background: transparent;
+    font-weight: normal;
+    font-family: ProximaNovaRegular, Helvetica, Arial, san-serif;
+    tap-highlight-color: transparent;
+    -webkit-tap-highlight-color: transparent;
+}
+
+#mdWidget {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1;
+    font-size: 16px;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block
+}
+
+#mdWidget nav ul {
+    list-style: none
+}
+
+#mdWidget blockquote, #mdWidget q {
+    quotes: none
+}
+
+#mdWidget blockquote:before, #mdWidget blockquote:after,
+#mdWidget q:before, #mdWidget q:after {
+    content: '';
+    content: none
+}
+
+#mdWidget a {
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent
+}
+
+#mdWidget ins {
+    background-color: #ff9;
+    color: #000;
+    text-decoration: none
+}
+
+#mdWidget mark {
+    background-color: #ff9;
+    color: #000;
+    font-style: italic;
+    font-weight: bold
+}
+
+#mdWidget del {
+    text-decoration: line-through
+}
+
+#mdWidget abbr[title], #mdWidget dfn[title] {
+    border-bottom: 1px dotted;
+    cursor: help
+}
+
+#mdWidget table {
+    border-collapse: collapse;
+    border-spacing: 0
+}
+
+#mdWidget hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #cccccc;
+    margin: 1em 0;
+    padding: 0
+}
+
+#mdWidget input, #mdWidget select {
+    vertical-align: middle
+}
+
+#mdWidget input {
+    font-family: ProximaNovaRegular, Helvetica, Arial, san-serif;
+}
+
+#mdWidget div, #mdWidget svg {
+    box-sizing: content-box;
+}
+
+#mdWidget input[type=text]::-ms-clear {
+    display: none
+}
+
+#mdWidget button:focus {
+    outline: dotted thin #333 !important;
+    outline-offset: 1px;
+}
+
+#mdWidget .css-rx6ysq.icon-right button {
+    font-family: "ProximaNovaRegular";
+    -webkit-appearance: none;
+    background-color: transparent;
+    border: none;
+}
+
+#mdWidget .css-rx6ysq.icon-right button::-moz-focus-inner {
+    border: 0;
+    padding: 0
+}
+
+#mdWidget p {
+    line-height: 1.4em
+}
+
+#mdWidget .css-rx6ysq.icon-right button:focus {
+    outline: dotted thin #333;
+    outline-offset: 1px
+}
+
+.mx-simple-input {
+    padding: 10px !important;
+    box-sizing: border-box;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    outline: none;
+    box-shadow: none;
+}
+
+.mx-simple-input input {
+    flex: 1 0 0;
+    color: rgb(46, 53, 59);
+    font-size: 13px;
+    background-color: rgb(255, 255, 255);
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+/*#mdWidget h3 {
+    color: rgb(53, 155, 207);
+    font-family: ProximaNovaRegular, Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    padding-bottom: 5px;
+}*/
+
+.css-1h5kimn {
+    text-align: left;
+    width: 100%;
+    border-top: 1px solid rgb(235, 239, 245) !important;
+    padding: 10px 0;
+}
+
+.css-h0ht0w, [data-css-h0ht0w] {
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    font-family: ProximaNova, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+}
+
+.css-1slxtd6.icon-right, [data-css-1slxtd6].icon-right {
+    padding-right: 36px;
+}
+
+.css-1slxtd6.icon-left, [data-css-1slxtd6].icon-left {
+    padding-left: 36px;
+}
+
+.css-1slxtd6, [data-css-1slxtd6] {
+    width: 100%;
+    height: 48px;
+    box-sizing: border-box;
+    box-shadow: rgb(106, 115, 129) 0px 0px 0px 0px;
+    color: rgb(18, 20, 23);
+    background-color: transparent;
+    font-size: 16px;
+    line-height: 20px;
+    border-radius: 4px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(106, 115, 129);
+    border-image: initial;
+    padding: 12px;
+    transition: box-shadow 350ms cubic-bezier(0.475, 0.425, 0, 0.995) 0s;
+}
+
+.css-1slxtd6:focus, [data-css-1slxtd6]:focus {
+    box-shadow: rgb(53, 155, 207) 0px 0px 0px 2px !important;
+    outline: none;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(53, 155, 207);
+    border-image: initial;
+}
+
+.css-rx6ysq, [data-css-rx6ysq] {
+    position: absolute;
+    top: 2px;
+    left: 12px;
+    right: auto;
+    height: 100%;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+
+.css-rx6ysq.icon-right, [data-css-rx6ysq].icon-right {
+    left: auto;
+    right: 12px;
+    width: 28px;
+    display: none;
+}
+
+#mdWidget svg {
+    height: 16px;
+    width: 16px;
+}
+
+.css-63oe3q, [data-css-63oe3q] {
+    width: 100%;
+}
+
+.css-l2dlxs, [data-css-l2dlxs] {
+    width: 100%;
+    margin-right: -14px;
+}
+
+.css-7pk48t:active, [data-css-7pk48t]:active {
+    border-width: 3px;
+    border-style: solid;
+    border-color: rgb(53, 155, 207);
+    border-image: initial;
+}
+
+.css-7pk48t:hover, [data-css-7pk48t]:hover {
+    box-shadow: rgba(87, 102, 117, 0.2) 0px 1px 3px;
+    cursor: pointer;
+    z-index: 100;
+}
+
+.css-7pk48t, [data-css-7pk48t] {
+    max-height: 72px;
+    display: flex;
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    z-index: 1;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    flex-direction: row;
+    -webkit-box-align: center;
+    align-items: center;
+    background: rgb(255, 255, 255);
+    padding: 9px;
+    border-radius: 4px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: transparent;
+    border-image: initial;
+}
+
+.css-7pk48t:hover .iconContainer, [data-css-7pk48t]:hover .iconContainer {
+    visibility: visible;
+}
+
+.css-x1gtu8, [data-css-x1gtu8] {
+    visibility: hidden;
+    margin-left: auto !important;
+    width: 25px;
+    align-self: center;
+    overflow: hidden;
+}
+
+.css-urwo4l, [data-css-urwo4l] {
+    margin-bottom: 12px !important;
+    margin-left: 32px !important;
+}
+
+#mdWidget a:-webkit-any-link, #mdWidget a:hover, #mdWidget a:active, #mdWidget a:focus, a:visited {
+    color: -webkit-link;
+    cursor: pointer;
+    text-decoration: underline !important;
+}
+
+.css-1wq6vmf:active, [data-css-1wq6vmf]:active {
+    background-color: rgb(205, 209, 215);
+    border-color: rgb(205, 209, 215);
+}
+
+.css-1wq6vmf:hover, [data-css-1wq6vmf]:hover {
+    background-color: rgb(220, 224, 230);
+    border-color: rgb(220, 224, 230);
+}
+
+.css-1wq6vmf, [data-css-1wq6vmf] {
+    box-sizing: border-box;
+    display: inline-block;
+    font-size: 13px;
+    font-family: ProximaNovaSemibold, Helvetica, Arial, sans-serif;
+    cursor: pointer;
+    min-width: 120px;
+    position: relative;
+    background-color: rgb(235, 239, 245);
+    color: rgb(46, 53, 59);
+    margin-right: 2px;
+    fill: rgb(87, 102, 117);
+    border-radius: 2px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: transparent;
+    padding: 4px 14px;
+    transition: all 0.2s ease-in 0s;
+}
+
+.css-btn-primary:active {
+    background-color: rgb(23, 125, 177);
+    border-color: rgb(23, 125, 177);
+}
+
+.css-btn-primary:hover {
+    background-color: rgb(38, 140, 192);
+    border-color: rgb(38, 140, 192);
+}
+
+.css-btn-primary {
+    box-sizing: border-box;
+    display: inline-block;
+    font-size: 13px;
+    font-family: ProximaNovaSemibold, Helvetica, Arial, sans-serif;
+    cursor: pointer;
+    min-width: 16px;
+    position: relative;
+    background-color: rgb(53, 155, 207);
+    color: rgb(255, 255, 255);
+    fill: rgb(255, 255, 255);
+    border-radius: 2px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(53, 155, 207);
+    padding: 4px 14px;
+    transition: all 0.2s ease-in 0s;
+}
+
+.css-gd8h5s, [data-css-gd8h5s] {
+    min-width: 120px !important;
+}
+
+.css-1ihzt4r, [data-css-1ihzt4r] {
+    width: 100%;
+}
+
+.css-yrv3w0:active, [data-css-yrv3w0]:active {
+    color: rgb(45, 147, 199);
+    border-color: rgb(45, 147, 199);
+}
+
+.css-yrv3w0:hover, [data-css-yrv3w0]:hover {
+    color: rgb(45, 147, 199);
+    border-color: rgb(235, 239, 245);
+}
+
+.css-yrv3w0, [data-css-yrv3w0] {
+    box-sizing: border-box;
+    display: inline-block;
+    font-size: 13px;
+    font-family: ProximaNovaSemibold, Helvetica, Arial, sans-serif;
+    cursor: pointer;
+    min-width: 16px;
+    position: relative;
+    color: rgb(53, 155, 207);
+    margin-top: 15px;
+    width: 100%;
+    background-color: transparent;
+    fill: rgb(53, 155, 207);
+    border-radius: 2px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: transparent;
+    padding: 4px 14px;
+    transition: all 0.2s ease-in 0s;
+}
+
+.css-12e5vyu, [data-css-12e5vyu] {
+    width: 100%;
+    margin: 0px 0px 15px;
+}
+
+.css-m4ru6s, [data-css-m4ru6s] {
+    box-sizing: border-box;
+    display: inline-block;
+    font-size: 13px;
+    font-family: ProximaNovaSemibold, Helvetica, Arial, sans-serif;
+    cursor: default;
+    min-width: 16px;
+    position: relative;
+    background-color: transparent;
+    color: rgb(235, 239, 245);
+    fill: rgb(235, 239, 245);
+    width: 100%;
+    border-radius: 2px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(235, 239, 245);
+    padding: 4px 14px;
+    transition: all 0.2s ease-in 0s;
+}
+

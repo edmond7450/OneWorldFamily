@@ -1,0 +1,254 @@
+{% load static %}
+
+<!--begin::Form-->
+<form class="profile-form form d-none" novalidate="novalidate" id="kt_social_profile_form" method="post" action="/back/settings/profile/">
+    {% csrf_token %}
+    <input type="hidden" name="request_class" value="social-profile">
+    <!--begin::Header-->
+    <div class="card-header py-3">
+        <div class="card-title align-items-start flex-column">
+            <h3 class="card-label font-weight-bolder text-dark">Social Profile</h3>
+            <span class="text-muted font-weight-bold font-size-sm mt-1">Update your social profile</span>
+        </div>
+    </div>
+    <!--end::Header-->
+    <!--begin::Body-->
+    <div class="card-body">
+        <div class="form-group row">
+            <div class="col-sm-1"></div>
+            <label class="col-form-label col-sm-2 max-w-130px px-0">Facebook</label>
+            <div class="col-sm-7">
+                <div class="input-group input-group-lg input-group-solid">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="socicon-facebook {% if social_accounts.Facebook %}text-success{% endif %}"></i>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control form-control-lg form-control-solid pl-2" id="Facebook" name="Facebook" value="{{ social_accounts.Facebook }}" disabled/>
+                </div>
+            </div>
+            <div class="col-sm-2 p-0">
+                <a href="javascript:" class="btn btn-primary font-weight-bold mr-2 social-add" data-provider="facebook">
+                    <i class="ki ki-plus icon-sm"></i> Profile
+                </a>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-1"></div>
+            <label class="col-form-label col-sm-2 max-w-130px px-0">Instagram</label>
+            <div class="col-sm-7">
+                <div class="input-group input-group-lg input-group-solid">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="socicon-instagram {% if social_accounts.Instagram %}text-success{% endif %}"></i>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control form-control-lg form-control-solid pl-2" id="Instagram" name="Instagram" value="{{ social_accounts.Instagram }}" disabled/>
+                </div>
+            </div>
+            <div class="col-sm-2 p-0">
+                <a href="javascript:" class="btn btn-primary font-weight-bold mr-2 social-add" data-provider="instagram">
+                    <i class="ki ki-plus icon-sm"></i> Profile
+                </a>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-1"></div>
+            <label class="col-form-label col-sm-2 max-w-130px px-0">LinkedIn</label>
+            <div class="col-sm-7">
+                <div class="input-group input-group-lg input-group-solid">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="socicon-linkedin {% if social_accounts.LinkedIn %}text-success{% endif %}"></i>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control form-control-lg form-control-solid pl-2" id="LinkedIn" name="LinkedIn" value="{{ social_accounts.LinkedIn }}" disabled/>
+                </div>
+            </div>
+            <div class="col-sm-2 p-0">
+                <a href="javascript:" class="btn btn-primary font-weight-bold mr-2 social-add" data-provider="linkedin">
+                    <i class="ki ki-plus icon-sm"></i> Profile
+                </a>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-1"></div>
+            <label class="col-form-label col-sm-2 max-w-130px px-0">Pinterest</label>
+            <div class="col-sm-7">
+                <div class="input-group input-group-lg input-group-solid">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="socicon-pinterest {% if social_accounts.Pinterest %}text-success{% endif %}"></i>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control form-control-lg form-control-solid pl-2" id="Pinterest" name="Pinterest" value="{{ social_accounts.Pinterest }}" disabled/>
+                </div>
+            </div>
+            <div class="col-sm-2 p-0">
+                <a href="javascript:" class="btn btn-primary font-weight-bold mr-2 social-add" data-provider="pinterest">
+                    <i class="ki ki-plus icon-sm"></i> Profile
+                </a>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-1"></div>
+            <label class="col-form-label col-sm-2 max-w-130px px-0">Reddit</label>
+            <div class="col-sm-7">
+                <div class="input-group input-group-lg input-group-solid">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="socicon-reddit {% if social_accounts.Reddit %}text-success{% endif %}"></i>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control form-control-lg form-control-solid pl-2" id="Reddit" name="Reddit" value="{{ social_accounts.Reddit }}" disabled/>
+                </div>
+            </div>
+            <div class="col-sm-2 p-0">
+                <a href="javascript:" class="btn btn-primary font-weight-bold mr-2 social-add" data-provider="reddit">
+                    <i class="ki ki-plus icon-sm"></i> Profile
+                </a>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-1"></div>
+            <label class="col-form-label col-sm-2 max-w-130px px-0">Snapchat</label>
+            <div class="col-sm-7">
+                <div class="input-group input-group-lg input-group-solid">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="socicon-snapchat {% if social_accounts.Snapchat %}text-success{% endif %}"></i>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control form-control-lg form-control-solid pl-2" id="Snapchat" name="Snapchat" value="{{ social_accounts.Snapchat }}" disabled/>
+                </div>
+            </div>
+            <div class="col-sm-2 p-0">
+                <a href="javascript:" class="btn btn-primary font-weight-bold mr-2 social-add" data-provider="snapchat">
+                    <i class="ki ki-plus icon-sm"></i> Profile
+                </a>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-1"></div>
+            <label class="col-form-label col-sm-2 max-w-130px px-0">TikTok</label>
+            <div class="col-sm-7">
+                <div class="input-group input-group-lg input-group-solid">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="socicon-tiktok {% if social_accounts.TikTok %}text-success{% endif %}"></i>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control form-control-lg form-control-solid pl-2" id="TikTok" name="TikTok" value="{{ social_accounts.TikTok }}" disabled/>
+                </div>
+            </div>
+            <div class="col-sm-2 p-0">
+                <a href="javascript:" class="btn btn-primary font-weight-bold mr-2 social-add" data-provider="tiktok">
+                    <i class="ki ki-plus icon-sm"></i> Profile
+                </a>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-1"></div>
+            <label class="col-form-label col-sm-2 max-w-130px px-0">Twitter</label>
+            <div class="col-sm-7">
+                <div class="input-group input-group-lg input-group-solid">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="socicon-twitter {% if social_accounts.Twitter %}text-success{% endif %}"></i>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control form-control-lg form-control-solid pl-2" id="Twitter" name="Twitter" value="{{ social_accounts.Twitter }}" disabled/>
+                </div>
+            </div>
+            <div class="col-sm-2 p-0">
+                <a href="javascript:" class="btn btn-primary font-weight-bold mr-2 social-add" data-provider="twitter">
+                    <i class="ki ki-plus icon-sm"></i> Profile
+                </a>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-1"></div>
+            <label class="col-form-label col-sm-2 max-w-130px px-0">YouTube</label>
+            <div class="col-sm-7">
+                <div class="input-group input-group-lg input-group-solid">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="socicon-youtube {% if social_accounts.YouTube %}text-success{% endif %}"></i>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control form-control-lg form-control-solid pl-2" id="YouTube" name="YouTube" value="{{ social_accounts.YouTube }}" disabled/>
+                </div>
+            </div>
+            <div class="col-sm-2 p-0">
+                <a href="javascript:" class="btn btn-primary font-weight-bold mr-2 social-add" data-provider="youtube">
+                    <i class="ki ki-plus icon-sm"></i> Profile
+                </a>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-1"></div>
+            <label class="col-form-label col-sm-2 max-w-130px px-0">Google</label>
+            <div class="col-sm-7">
+                <div class="input-group input-group-lg input-group-solid">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="socicon-google {% if social_accounts.Google %}text-success{% endif %}"></i>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control form-control-lg form-control-solid pl-2" id="Google" name="Google" value="{{ social_accounts.Google }}" disabled/>
+                </div>
+            </div>
+            <div class="col-sm-2 p-0">
+                <a href="javascript:" class="btn btn-primary font-weight-bold mr-2 social-add" data-provider="google">
+                    <i class="ki ki-plus icon-sm"></i> Profile
+                </a>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-1"></div>
+            <label class="col-form-label col-sm-2 max-w-130px px-0">Microsoft</label>
+            <div class="col-sm-7">
+                <div class="input-group input-group-lg input-group-solid">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="socicon-windows {% if social_accounts.Microsoft %}text-success{% endif %}"></i>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control form-control-lg form-control-solid pl-2" id="Microsoft" name="Microsoft" value="{{ social_accounts.Microsoft }}" disabled/>
+                </div>
+            </div>
+            <div class="col-sm-2 p-0">
+                <a href="javascript:" class="btn btn-primary font-weight-bold mr-2 social-add" data-provider="microsoft">
+                    <i class="ki ki-plus icon-sm"></i> Profile
+                </a>
+            </div>
+        </div>
+    </div>
+    <!--end::Body-->
+</form>
+<!--end::Form-->
+
+<!-- Choose Feed Modal-->
+<div class="modal fade" id="choose_feed_modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="choose_feed_modal_label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Feeds</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="provider" name="provider"/>
+                <input type="hidden" id="profile_id" name="profile_id"/>
+                <div class="row">
+                    <div class="col-12" id="kt_modal_feed_table"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                <button type="button" class="add-feeds btn btn-primary font-weight-bold">Add</button>
+            </div>
+        </div>
+    </div>
+</div>

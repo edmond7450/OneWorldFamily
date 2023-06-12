@@ -1,0 +1,75 @@
+.brand-logo img {
+    position: absolute;
+    top: 1px;
+    left: 0;
+    width: 120px;
+    clip: rect(0px 120px 56px 0px);
+}
+
+#kt_personal_information_form .radio-inline {
+    margin-top: 8px;
+}
+
+@media (max-width: 991.98px) {
+    .brand-logo img {
+        width: 112px;
+    }
+}
+
+@media (min-width: 1600px) {
+    .container-xxl, .container-xl, .container-lg, .container-md, .container-sm, .container {
+        max-width: 1540px;
+    }
+}
+
+@media (min-width: 1800px) {
+    .container-xxl, .container-xl, .container-lg, .container-md, .container-sm, .container {
+        max-width: 1740px;
+    }
+}
+
+.transaction-search label {
+    width: 65px;
+}
+
+input:disabled {
+    background-color: #E4E6EF !important;
+}
+
+.show-password {
+    display: none;
+}
+
+.btn-actions {
+    color: #AAA;
+    width: 35px;
+    height: 35px;
+    border-radius: 4px;
+    background-color: #f3f6f9;
+    display: inline-block;
+    padding: 10px;
+    border: none;
+    transition: .3s;
+}
+
+.btn-actions > span > svg {
+    fill: #999;
+    transition: .3s;
+}
+
+.btn-actions:hover {
+    color: #FFF;
+    background-color: #3699ff !important;
+}
+
+.btn-actions:hover > span > svg {
+    fill: #FFF;
+}
+
+.pac-container {
+    z-index: 10000 !important;
+}
+
+#permission_modal {
+    transition-delay: 0.3s;
+}

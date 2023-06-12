@@ -1,0 +1,16 @@
+{% extends './layout.html' %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    {% include "back/pages/dashboard.html" %}
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+        var chart_data = JSON.parse('{{ chart_data|safe }}');
+    </script>
+
+    <script src="{% static 'metronic/js/pages/dashboard.js' %}"></script>
+{% endblock %}

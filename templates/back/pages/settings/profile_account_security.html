@@ -1,0 +1,184 @@
+{% load static %}
+
+<!--begin::Form-->
+<form class="profile-form form d-none" novalidate="novalidate" id="kt_account_security_form" method="post" action="/back/settings/profile/">
+    {% csrf_token %}
+    <input type="hidden" name="request_class" value="account-security">
+    <!--begin::Header-->
+    <div class="card-header py-3">
+        <div class="card-title align-items-start flex-column">
+            <h3 class="card-label font-weight-bolder text-dark">Account Security</h3>
+            <span class="text-muted font-weight-bold font-size-sm mt-1">Update your account security</span>
+        </div>
+    </div>
+    <!--end::Header-->
+    <!--begin::Body-->
+    <div class="card-body two-factor-on {% if user.profile.two_factor == 0 %} d-none {% endif %} ">
+        <div class="row p-5 ml-3">
+            <span class="mr-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path style="fill:#5DC26A;" d="M12.042 2c-5.523 0-10 4.477-10 10s4.477 10 10 10 10-4.477 10-10-4.478-10-10-10zm-.75 15.75l-5-3.75 1.5-2 3 2.25 5.25-7 2 1.5-6.75 9z"></path>
+                </svg>
+            </span>
+            <h2 class="card-text font-weight-bolder text-dark">Two-Factor Authentication</h2>
+        </div>
+        <div class="font-size-h6 p-5 ml-3">
+            <p>Your account is secured with two-factor authentication.</p>
+            <div class="d-flex flex-row p-1">
+                <div class="col-4">
+                    <span class="card-label font-weight-bolder text-dark">Delivery Preference</span>
+                </div>
+                <div class="col-6">
+                    <span class="two-factor-method">
+                        {% if user.profile.two_factor == 0 or user.profile.two_factor == 1 %}
+                            SMS
+                        {% elif user.profile.two_factor == 2 %}
+                            email
+                        {% endif %}
+                    </span>
+                </div>
+                <div class="col-2">
+                    <a href="javascript:" data-toggle="modal" data-target="#two_factor_method_modal">edit</a>
+
+                </div>
+            </div>
+            <div class="d-flex flex-row p-1">
+                <div class="col-4">
+                    <span class="card-label font-weight-bolder text-dark">Email Address</span>
+                </div>
+                <div class="col-6">
+                    <span>{{ user.email }}</span>
+                </div>
+                <div class="col-2">
+                    <a href="javascript:" class="edit-personal-information">edit</a>
+                </div>
+            </div>
+            <div class="d-flex flex-row p-1">
+                <div class="col-4">
+                    <span class="card-label font-weight-bolder text-dark">Phone Number</span>
+                </div>
+                <div class="col-6">
+                    <span>{{ user.profile.phone }}</span>
+                </div>
+                <div class="col-2">
+                    <a href="javascript:" class="edit-personal-information">edit</a>
+                </div>
+            </div>
+            <div class="d-flex flex-row la-pull-right p-10">
+                <a href="javascript:" class="turn-off-two-factor">Turn off two-factor authentication</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body two-factor-off {% if user.profile.two_factor > 0 %} d-none {% endif %} ">
+        <div class="row p-5 ml-3">
+            <span class="mr-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <g transform="translate(2 2)" fill-rule="evenodd">
+                        <circle style="fill:#e96800;" cx="10" cy="10" r="10"></circle>
+                        <path d="M11.417 11.773h-2.86L8.104 4h3.763l-.45 7.773zM8 14.695c0-.53.187-.967.56-1.308.375-.34.84-.512 1.4-.512.56 0 1.025.17 1.4.512.373.34.56.777.56 1.308 0 .53-.187.967-.56 1.308-.375.34-.84.512-1.4.512-.56 0-1.025-.17-1.4-.512-.373-.34-.56-.777-.56-1.308z"
+                              fill="#FFF"></path>
+                    </g>
+                </svg>
+            </span>
+            <h2 class="card-text font-weight-bolder text-dark">Two-Factor Authentication</h2>
+        </div>
+        <div class="p-5 ml-3">
+            <p>Your account does not have two-factor authentication turned on.</p>
+            <p>
+                Two-factor authentication ensures that only devices you trust are able to access your GreenStar account.
+                Whenever a new device attempts to login to your account, you will be required to confirm the login by using the OTP sent to your email address or mobile phone number.
+            </p>
+            <div class="d-flex flex-row la-pull-right p-10">
+                <a class="btn btn-primary mr-2" data-toggle="modal" data-target="#two_factor_confirm_modal">Get Started</a>
+            </div>
+        </div>
+    </div>
+    <!--end::Body-->
+</form>
+<!--end::Form-->
+
+<!-- Two Factor Method Modal-->
+<div class="modal fade" id="two_factor_method_modal" tabindex="-1" role="dialog" aria-labelledby="two_factor_method_modal_label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">OTP Delivery Methods</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>How would you like to receive your login OTP?</h4>
+                <div class="radio-list pt-5 pl-10">
+                    <label class="radio radio-outline radio-outline-2x radio-primary pb-1">
+                        {% if user.profile.two_factor == 0 or user.profile.two_factor == 1 %}
+                            <input type="radio" name="two_factor" value="1" checked/>
+                        {% else %}
+                            <input type="radio" name="two_factor" value="1"/>
+                        {% endif %}
+                        <span></span>SMS</label>
+                    <label class="radio radio-outline radio-outline-2x radio-primary">
+                        {% if user.profile.two_factor == 2 %}
+                            <input type="radio" name="two_factor" value="2" checked/>
+                        {% else %}
+                            <input type="radio" name="two_factor" value="2"/>
+                        {% endif %}
+                        <span></span>email</label>
+                </div>
+                <div class="text-dark pt-10 pb-5">
+                    <span class="font-weight-bolder">Note:</span>
+                    <span>
+                        If we can't deliver you the OTP through your preferred method, we may at times still use an alternative method to deliver you your OTP.
+                    </span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                <button type="button" class="save-two-factor-methond btn btn-primary font-weight-bold">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Two Factor Confirm Modal-->
+<div class="modal fade" id="two_factor_confirm_modal" tabindex="-1" role="dialog" aria-labelledby="two_factor_confirm_modal_label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Set up two-factor authentication</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Please take a moment to check that the following details are correct. The information below will be used to deliver your OTP.</p>
+                <div class="p-5">
+                    <div class="d-flex flex-row p-1">
+                        <div class="col-10">
+                            <span class="card-label font-weight-bolder text-dark">Email Address: </span>
+                            <span>{{ user.email }}</span>
+                        </div>
+                        <div class="col-2">
+                            <a href="javascript:" class="edit-personal-information">edit</a>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-row p-1">
+                        <div class="col-10">
+                            <span class="card-label font-weight-bolder text-dark">Phone Number: </span>
+                            <span>{{ user.profile.phone }}</span>
+                        </div>
+                        <div class="col-2">
+                            <a href="javascript:" class="edit-personal-information">edit</a>
+                        </div>
+                    </div>
+                </div>
+                <p>Once you're satisfied that the details are correct, click the button below to turn on two-factor authentication.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                <button type="button" class="turn-on-two-factor btn btn-primary font-weight-bold">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
