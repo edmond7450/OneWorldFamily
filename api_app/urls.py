@@ -24,10 +24,6 @@ urlpatterns = [
     path('user/resend-email-code/', signup.SendEmailView.as_view(), name='api_user_send_email_code'),
     path('user/verify-email/', signup.VerifyEmailView.as_view(), name='api_user_verify_email'),
 
-    path('user/save-phone-number/', signup.SavePhoneView.as_view(), name='api_user_save_phone'),
-    path('user/resend-phone-code/', signup.SendSMSView.as_view(), name='api_user_send_phone_code'),
-    path('user/verify-phone/', signup.VerifyPhoneView.as_view(), name='api_user_verify_phone'),
-
     path('user/forgot/', forgot.ForgotView.as_view(), name='api_user_forgot'),
     path('user/reset/', forgot.ResetView.as_view(), name='api_user_reset'),
     path('user/check-password-token/', forgot.CheckView.as_view(), name='api_user_check_password_token'),

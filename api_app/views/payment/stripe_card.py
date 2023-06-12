@@ -128,7 +128,7 @@ class CardView(APIView):
                     email=user.email,
                     name=user.get_full_name(),
                     description='Created from Sharp Archive',
-                    metadata={'user_id': user.id, 'phone': profile.phone, 'business_name': profile.business_name, 'environment': ENVIRONMENT},
+                    metadata={'user_id': user.id, 'phone': profile.phone, 'environment': ENVIRONMENT},
                     address={'line1': addresses[0], 'city': city, 'state': state, 'country': country, 'postal_code': postal_code, },
                     expand=['tax'],
                 )

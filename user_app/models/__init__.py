@@ -1,4 +1,3 @@
-from .anonymous import Anonymous
 from .coupon import Coupon
 from .device import Device
 from .meta import Meta

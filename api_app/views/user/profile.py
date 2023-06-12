@@ -30,8 +30,6 @@ class ProfileView(APIView):
             data['gender'] = profile.gender
             data['phone'] = profile.phone
             data['address'] = profile.address
-            data['businessName'] = profile.business_name
-            data['businessType'] = profile.business_type
             if profile.avatar:
                 data['avatar'] = 'https://' + request.get_host() + profile.avatar.url
             else:
@@ -41,7 +39,6 @@ class ProfileView(APIView):
 
             data['isOwner'] = profile.is_owner
             data['userPermission'] = profile.user_permission
-            data['alertPermission'] = profile.alert_permission
 
         except Exception as e:
             return JsonResponse({'status': 400, 'success': False, 'message': repr(e)})
@@ -65,8 +62,6 @@ class ProfileView(APIView):
             profile.gender = data['gender']
             profile.phone = phone
             profile.address = data['address']
-            profile.business_name = data['businessName']
-            profile.business_type = data['businessType']
 
             if request.FILES and request.FILES['avatar']:
                 if request.FILES['avatar'].content_type == 'image/jpeg' or request.FILES['avatar'].content_type == 'image/png':
@@ -94,8 +89,6 @@ class ProfileView(APIView):
             data['gender'] = profile.gender
             data['phone'] = profile.phone
             data['address'] = profile.address
-            data['businessName'] = profile.business_name
-            data['businessType'] = profile.business_type
             if profile.avatar:
                 data['avatar'] = 'https://' + request.get_host() + profile.avatar.url
             else:

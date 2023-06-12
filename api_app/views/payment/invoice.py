@@ -193,7 +193,6 @@ def create_invoice(user_id, subtotal, tax, current_date, billing_details, is_due
     data['total'] = '{0:,.2f}'.format(subtotal + tax)
 
     data['payer'] = {
-        'business_name': user.profile.business_name,
         'full_name': billing_details['name'],
         'address_line1': billing_details['address']['line1'] + (' #' + billing_details['address']['line2'] if billing_details['address']['line2'] else ''),
         'address_line2': (billing_details['address']['city'] + ', ' if billing_details['address']['city'] else '')
@@ -286,7 +285,6 @@ def create_refund(user_id, stripe_payment_intent_id, total, forced=False):
     profile = user.profile
     address_components = json.loads(profile.address_components)
     data['payer'] = {
-        'business_name': profile.business_name,
         'full_name': user.get_full_name(),
         'address_line1': address_components['street_number'] + ' ' + address_components['route'],
         'address_line2': address_components['city'] + (', ' + address_components['state'] if address_components['state'] else ',') + ' ' + address_components['postal_code'] + ' ' + address_components['country'],

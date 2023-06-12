@@ -1,7 +1,7 @@
 from django.urls import path
 
 from user_app.views.back import login, forgot, reset
-from user_app.views.back import profile, coupon, staff_profile, staff_list, client_list, partner_list, partner_request
+from user_app.views.back import profile, coupon, staff_profile, staff_list, client_list
 
 urlpatterns = [
     path('login/', login.LoginView.as_view(), name='user_login'),
@@ -25,7 +25,4 @@ urlpatterns = [
     path('permission/', staff_profile.PermissionView.as_view(), name='user_permission'),
 
     path('client/list/', client_list.ClientListView.as_view(), name='client_list'),
-
-    path('partner/list/', partner_list.PartnerListView.as_view(), name='partner_list'),
-    path('partner/request/', partner_request.PartnerRequestView.as_view(), name='partner_request'),
 ]

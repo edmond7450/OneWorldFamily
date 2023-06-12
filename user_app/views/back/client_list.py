@@ -107,7 +107,6 @@ class ClientListView(ListView):
                 sql += " AND ( CAST(first_name AS CHAR CHARACTER SET utf8) COLLATE utf8_general_ci LIKE '%%" + search + "%%'"
                 sql += " OR CAST(last_name AS CHAR CHARACTER SET utf8) COLLATE utf8_general_ci LIKE '%%" + search + "%%'"
                 sql += " OR CAST(username AS CHAR CHARACTER SET utf8) COLLATE utf8_general_ci LIKE '%%" + search + "%%'"
-                sql += " OR CAST(business_name AS CHAR CHARACTER SET utf8) COLLATE utf8_general_ci LIKE '%%" + search + "%%'"
                 sql += " OR CAST(phone AS CHAR CHARACTER SET utf8) COLLATE utf8_general_ci LIKE '%%" + search + "%%'"
                 sql += " OR CAST(last_login AS CHAR CHARACTER SET utf8) COLLATE utf8_general_ci LIKE '%%" + search + "%%'"
                 sql += " OR CAST(date_joined AS CHAR CHARACTER SET utf8) COLLATE utf8_general_ci LIKE '%%" + search + "%%'"
@@ -122,7 +121,7 @@ class ClientListView(ListView):
             total = row[0]
             pages = math.ceil(total / perpage)
 
-        if sort_field not in ['name', 'business_name', 'last_login', 'membership_date', 'status']:
+        if sort_field not in ['name', 'last_login', 'membership_date', 'status']:
             sort_field = 'u.id'
 
         if sort_field == 'name':
@@ -147,7 +146,6 @@ class ClientListView(ListView):
                 item['avatar'] = ''
             item['name'] = user.get_full_name()
             item['username'] = user.username
-            item['business_name'] = profile.business_name
             item['phone'] = profile.phone
             if user.last_login:
                 item['last_login'] = user.last_login.strftime('%m/%d/%Y')
