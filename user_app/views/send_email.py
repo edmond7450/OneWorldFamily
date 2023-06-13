@@ -2,7 +2,6 @@ import base64
 import mimetypes
 import pickle
 import os
-import smtplib
 
 from django.conf import settings
 from email.mime.audio import MIMEAudio
@@ -14,7 +13,7 @@ from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 
-from my_settings import GMAIL_APP_USER, GMAIL_APP_PASS, GMAIL_TOKEN_NAME
+from my_settings import GMAIL_TOKEN_NAME
 
 
 class SendGmail:
@@ -128,26 +127,11 @@ class SendGmail:
 
 
 def send_mail(sender, to, subject, message, content_subtype='plain'):
-    if to == 'demo@sharparchive.com':
-        return
-
     if isinstance(to, list):
         to = ', '.join(to)
 
-    # gmail = SendGmail()
-    # service = gmail.get_service()
-    # user_id = 'me'
-    # msg = gmail.create_message(sender, to, subject, message, content_subtype)
-    # gmail.send_message(service, user_id, msg)
-
-    session = smtplib.SMTP('smtp.gmail.com', 587)
-    session.starttls()
-    session.login(GMAIL_APP_USER, GMAIL_APP_PASS)
-
-    msg = MIMEText(message, content_subtype)
-    msg['to'] = to
-    msg['from'] = sender
-    msg['subject'] = subject
-
-    session.sendmail(sender, to, msg.as_string())
-    session.quit()
+    gmail = SendGmail()
+    service = gmail.get_service()
+    user_id = 'me'
+    msg = gmail.create_message(sender, to, subject, message, content_subtype)
+    gmail.send_message(service, user_id, msg)

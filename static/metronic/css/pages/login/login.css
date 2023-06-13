@@ -137,6 +137,10 @@
     padding-top: 3px;
 }
 
+.login .login-aside .login-logo img {
+    width: 400px;
+}
+
 @media (min-width: 992px) {
     .login .login-aside {
         width: 100%;

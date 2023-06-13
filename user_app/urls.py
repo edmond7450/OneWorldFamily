@@ -11,11 +11,6 @@ urlpatterns = [
     path('logout/', login.logout, name='user_logout'),
 
     path('forgot/', forgot.ForgotView.as_view(), name='user_forgot'),
-    path('forgot_clean/', forgot.clean, name='user_forgot_clean'),
-    path('forgot_send_otp/', forgot.send_otp, name='user_forgot_send_otp'),
-    path('forgot_check_otp/', forgot.check_otp, name='user_forgot_check_otp'),
-    path('forgot_send_email/', forgot.send_email, name='user_forgot_send_email'),
-
     path('reset/<str:uidb64>/<str:token>', reset.ResetView.as_view(), name='reset'),
 
     path('profile/', profile.ProfileView.as_view(), name='user_profile'),
