@@ -79,7 +79,7 @@ class DashboardView(TemplateView):
             }
 
             sql = f"SELECT DATE_FORMAT(date_joined, '%b %e, %Y'), COUNT(*) FROM auth_user " \
-                  f"WHERE id IN (SELECT user_id FROM user_profile WHERE payment_status != '' AND status != {USER_STATUS.INTERNAL} AND ISNULL(owner_id)) " \
+                  f"WHERE id IN (SELECT user_id FROM user_profile WHERE payment_status != '' AND status != {USER_STATUS.INTERNAL}) " \
                   f"AND DATE(date_joined) >= CAST('{start_date}' AS DATE) AND DATE(date_joined) <= CAST('{end_date}' AS DATE) " \
                   f"GROUP BY DATE_FORMAT(date_joined, '%b %e, %Y') ORDER BY id"
             cursor.execute(sql)
@@ -96,47 +96,13 @@ class DashboardView(TemplateView):
                 user_series[categories.index(row[0])] = row[1]
 
             data['user'] = {
-                'total': Profile.objects.filter(~Q(payment_status=''), status=USER_STATUS.VERIFIED, owner_id=None).count(),
+                'total': Profile.objects.filter(~Q(payment_status=''), status=USER_STATUS.VERIFIED).count(),
                 'new': new,
             }
             chart_data['user'] = {
                 'max_y': max_y if max_y > 1000 else int(max_y * 1.2),
                 'categories': categories,
                 'series': user_series
-            }
-
-            sql = f"SELECT DATE_FORMAT(date_joined, '%b %e, %Y'), COUNT(*) FROM social_account, user_profile " \
-                  f"WHERE DATE(date_joined) >= CAST('{start_date}' AS DATE) AND DATE(date_joined) <= CAST('{end_date}' AS DATE) " \
-                  f"AND social_account.user_id = user_profile.user_id AND user_profile.status != {USER_STATUS.INTERNAL} " \
-                  f"GROUP BY DATE_FORMAT(date_joined, '%b %e') ORDER BY social_account.id"
-            cursor.execute(sql)
-            rows = cursor.fetchall()
-
-            new = 0
-            max_y = 0
-            feed_series = series.copy()
-            for row in rows:
-                if (datetime.strptime(row[0], '%b %d, %Y').date() >= first_date):
-                    new += row[1]
-                if row[1] > max_y:
-                    max_y = row[1]
-                feed_series[categories.index(row[0])] = row[1]
-
-            # total = Account.objects.filter(date_closed=None).count()
-            sql = f"SELECT COUNT(*) FROM social_account, user_profile " \
-                  f"WHERE ISNULL(date_closed) AND social_account.user_id = user_profile.user_id AND user_profile.status != {USER_STATUS.INTERNAL}"
-            cursor.execute(sql)
-            row = cursor.fetchone()
-            total = row[0]
-
-            data['feed'] = {
-                'total': total,
-                'new': new
-            }
-            chart_data['feed'] = {
-                'max_y': max_y if max_y > 1000 else int(max_y * 1.2),
-                'categories': categories,
-                'series': feed_series
             }
 
             sql = f"SELECT DATE_FORMAT(created_at, '%b %e, %Y'), COUNT(*) FROM back_history, user_profile " \

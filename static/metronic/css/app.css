@@ -1,7 +1,7 @@
 .brand-logo img {
     position: absolute;
-    top: 1px;
-    left: 0;
+    top: 10px;
+    left: 30px;
     width: 120px;
     clip: rect(0px 120px 56px 0px);
 }
