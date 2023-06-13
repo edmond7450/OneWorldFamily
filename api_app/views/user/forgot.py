@@ -103,7 +103,7 @@ class ResetView(APIView):
                 'year': timezone.now().year
             })
 
-            send_mail(GMAIL_HOST_USER, user.email, 'Your Sharp Archive Account Password Changed', message, 'html')
+            send_mail(GMAIL_HOST_USER, user.email, 'Your One World Family Account Password Changed', message, 'html')
 
             return JsonResponse({'status': 200, 'message': 'Password Updated'})
 

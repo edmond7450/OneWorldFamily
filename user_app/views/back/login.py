@@ -69,7 +69,7 @@ class LoginView(View):
                     builder.set_body({
                         'from': {'phoneNumber': RINGCENTRAL['PHONE_NUMBER']},
                         'to': [{'phoneNumber': profile.phone}],
-                        'text': f'Your Sharp Archive verification code is: {phone_code}.'
+                        'text': f'Your One World Family verification code is: {phone_code}.'
                     })
                     request = builder.request('/account/~/extension/~/sms')
                     response = platform.send_request(request)
@@ -181,7 +181,7 @@ def send_otp(request):
                 builder.set_body({
                     'from': {'phoneNumber': RINGCENTRAL['PHONE_NUMBER']},
                     'to': [{'phoneNumber': user.profile.phone}],
-                    'text': f'Your Sharp Archive verification code is: {phone_code}.'
+                    'text': f'Your One World Family verification code is: {phone_code}.'
                 })
                 request = builder.request('/account/~/extension/~/sms')
                 response = platform.send_request(request)

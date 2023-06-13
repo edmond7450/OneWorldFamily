@@ -32,7 +32,7 @@ class CheckEmailView(APIView):
             return JsonResponse({'status': 401, 'success': False, 'message': 'Email is not valid'})
 
         if User.objects.filter(username=request.data['email'], profile__status__gt=0).exists():
-            return JsonResponse({'status': 402, 'success': False, 'message': 'Email Already in Use with Sharp Archive'})
+            return JsonResponse({'status': 402, 'success': False, 'message': 'Email Already in Use with One World Family'})
         else:
             return JsonResponse({'status': 200, 'success': True, 'message': 'Successfully Checked'})
 
@@ -58,7 +58,7 @@ class RegisterView(APIView):
             return JsonResponse({'status': 402, 'success': False, 'message': 'Email is not valid'})
 
         if User.objects.filter(username=username, profile__status__gt=0).exists():
-            return JsonResponse({'status': 403, 'success': False, 'message': 'Email Already in Use with Sharp Archive'})
+            return JsonResponse({'status': 403, 'success': False, 'message': 'Email Already in Use with One World Family'})
 
         if invitation_code and not Partner.objects.filter(code=invitation_code).exists():
             return JsonResponse({'status': 404, 'success': False, 'message': 'Partner Code Error'})

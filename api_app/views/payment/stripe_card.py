@@ -118,7 +118,7 @@ class CardView(APIView):
                 customer = stripe.Customer.create(
                     email=user.email,
                     name=user.get_full_name(),
-                    description='Created from Sharp Archive',
+                    description='Created from One World Family',
                     metadata={'user_id': user.id, 'phone': profile.phone, 'environment': ENVIRONMENT},
                     address={'line1': addresses[0], 'city': city, 'state': state, 'country': country, 'postal_code': postal_code, },
                     expand=['tax'],

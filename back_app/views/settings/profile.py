@@ -92,7 +92,7 @@ class ProfileView(DetailView):
                 'year': timezone.now().year
             })
 
-            send_mail(GMAIL_HOST_USER, user.email, 'Your Sharp Archive Account Password Changed', message, 'html')
+            send_mail(GMAIL_HOST_USER, user.email, 'Your One World Family Account Password Changed', message, 'html')
 
         else:
             return render(request, self.template_name, {'request_class': request_class, 'result': 'fail', 'message': 'Unknown Request', 'GOOGLE_MAPS_API_KEY': GOOGLE_MAPS_API_KEY})

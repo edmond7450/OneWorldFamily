@@ -228,7 +228,7 @@ def create_invoice(user_id, subtotal, tax, current_date, billing_details, is_due
 
         sourceHtml = render_to_string('user/email/invoice-due.html', {'data': data})
 
-    subject = 'Sharp Archive Invoice'
+    subject = 'One World Family Invoice'
     send_mail(GMAIL_HOST_USER, user.email, subject, sourceHtml, 'html')
 
     send_mail(GMAIL_HOST_USER, LOG_RECIPIENT_ADDRESS, subject, sourceHtml, 'html')
@@ -293,7 +293,7 @@ def create_refund(user_id, stripe_payment_intent_id, total, forced=False):
     }
     pdfkit.from_string(sourceHtml, invoice_path, configuration=configuration, options=options)
 
-    subject = 'Sharp Archive Refund'
+    subject = 'One World Family Refund'
     send_mail(GMAIL_HOST_USER, user.email, subject, sourceHtml, 'html')
 
     # send to manager too

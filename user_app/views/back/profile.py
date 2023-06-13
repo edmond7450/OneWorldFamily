@@ -66,7 +66,7 @@ class ProfileView(DetailView):
                     return JsonResponse({'status': 401, 'message': 'Email is not valid'})
 
                 if User.objects.filter(username=data['add_email']).exists():
-                    return JsonResponse({'status': 402, 'message': 'Email Already in Use with Sharp Archive'})
+                    return JsonResponse({'status': 402, 'message': 'Email Already in Use with One World Family'})
 
             phone = phonenumbers.parse(data['phone'])
             if not phonenumbers.is_valid_number(phone):
