@@ -9,11 +9,7 @@ class SettingView(APIView):
 
     def get(self, request, meta_key):
         try:
-            user = request.user
-            if not user.profile.is_owner:
-                user = user.profile.owner
-
-            meta_value = Meta.objects.get(user_id=user.id, meta_key=meta_key).meta_value
+            meta_value = Meta.objects.get(user_id=request.user.id, meta_key=meta_key).meta_value
         except:
             return JsonResponse({'status': 401, 'success': False, 'message': 'Data not found'})
 
@@ -29,11 +25,6 @@ class SettingView(APIView):
     def post(self, request, meta_key):
         try:
             user = request.user
-            if not user.profile.is_owner:
-                if user.profile.user_permission != 'Administrator':
-                    return JsonResponse({'status': 401, 'success': False, 'message': 'You do not have permission'})
-                else:
-                    user = user.profile.owner
 
             meta_value = request.data
 

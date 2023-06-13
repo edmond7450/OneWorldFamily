@@ -47,7 +47,7 @@ class InvoiceView(ListView):
                 pass
 
         users = []
-        rows = User.objects.filter(profile__is_owner=True)
+        rows = User.objects.all()
         for row in rows:
             item = {}
             item['id'] = row.id

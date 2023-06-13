@@ -71,14 +71,29 @@ class RegisterView(APIView):
                 user.password = make_password(password)
 
                 profile = user.profile
+                security = Security.objects.get(user_id=user.id)
             else:
                 user = User.objects.create_user(username=username, email=email, password=password, first_name=first_name, last_name=last_name, is_active=0)
 
                 profile = Profile.objects.create(id=user.id, user_id=user.id)
-                Security.objects.create(id=user.id, user_id=user.id)
+                security = Security.objects.create(id=user.id, user_id=user.id)
 
             profile.two_factor = 2
             profile.save()
+
+            email_code = random.randrange(100000, 999999)
+            security.otp = str(email_code)
+            security.updated_at = timezone.now()
+            security.save()
+
+            message = render_to_string('user/email/verify_code.html', {
+                'url': SITE_URL,
+                'first_name': first_name,
+                'code': email_code,
+                'year': timezone.now().year
+            })
+
+            send_mail(GMAIL_HOST_USER, user.email, 'Your Verification Code', message, 'html')
 
             if invitation_code:
                 partner_id = User.objects.get(username=Partner.objects.get(code=invitation_code).email).id
@@ -154,6 +169,10 @@ class VerifyEmailView(APIView):
             except User.DoesNotExist:
                 return JsonResponse({'status': 401, 'success': False, 'message': 'User does not exist'})
 
+            is_anonymous = True
+        else:
+            is_anonymous = False
+
         try:
             security = Security.objects.get(user_id=user.id)
             if (timezone.now() - security.updated_at).seconds > 60 * 30:
@@ -162,6 +181,13 @@ class VerifyEmailView(APIView):
             if security.otp == request.data['otp']:
                 security.otp_attempt_counts = 0
                 security.save()
+
+                if is_anonymous:
+                    user.is_active = 1
+                    user.save()
+                    user.profile.status = USER_STATUS.VERIFIED
+                    user.profile.save()
+
                 return JsonResponse({'status': 200, 'success': True, 'message': 'Email Verified'})
 
             security.otp_attempt_counts += 1

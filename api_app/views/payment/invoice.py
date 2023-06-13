@@ -22,13 +22,9 @@ from user_app.views.send_email import send_mail
 
 class InvoiceView(APIView):
     def get(self, request):
-        user = request.user
-        if not user.profile.is_owner:
-            user = user.profile.owner
-
         data = []
-        rows = Invoice.objects.filter(user_id=user.id).order_by('-id')
-        if Invoice.objects.filter(user_id=user.id, total=0).count() == 0:
+        rows = Invoice.objects.filter(user_id=request.user.id).order_by('-id')
+        if Invoice.objects.filter(user_id=request.user.id, total=0).count() == 0:
             for row in rows:
                 item = {}
                 item['id'] = row.id
@@ -63,11 +59,7 @@ class InvoiceView(APIView):
 
     def post(self, request):
         try:
-            user = request.user
-            if not user.profile.is_owner:
-                user = user.profile.owner
-
-            invoice_path = Invoice.objects.get(id=request.data['id'], user_id=user.id).invoice_path
+            invoice_path = Invoice.objects.get(id=request.data['id'], user_id=request.user.id).invoice_path
 
             mime_type, _ = mimetypes.guess_type(invoice_path)
             response = FileResponse(FileWrapper(open(invoice_path, 'rb')), content_type=mime_type)

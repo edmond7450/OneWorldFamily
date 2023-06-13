@@ -37,7 +37,7 @@ class NotificationView(ListView):
             categories.append(row['category'])
 
         users = []
-        rows = User.objects.filter(profile__is_owner=True)
+        rows = User.objects.all()
         for row in rows:
             item = {}
             item['id'] = row.id

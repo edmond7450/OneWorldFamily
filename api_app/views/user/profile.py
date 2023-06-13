@@ -37,7 +37,6 @@ class ProfileView(APIView):
             data['paymentStatus'] = profile.payment_status
             data['closeAccountInfo'] = profile.close_account_info if profile.close_account_info else ''
 
-            data['isOwner'] = profile.is_owner
             data['userPermission'] = profile.user_permission
 
         except Exception as e:
@@ -111,9 +110,6 @@ class ProfileView(APIView):
             profile.status = USER_STATUS.CLOSED
             profile.close_account_info = now
             profile.save()
-
-            if not user.profile.is_owner:
-                return JsonResponse({'status': 200, 'success': True, 'message': 'Account Successfully Closed'})
 
             Profile.objects.filter(owner=user, user__is_active=1).update(close_account_info=now, status=USER_STATUS.CLOSED)
             User.objects.filter(is_active=1, profile__owner=user).update(is_active=0)

@@ -16,12 +16,6 @@ class OrderView(APIView):
     def post(self, request):
         try:
             user = request.user
-            if not user.profile.is_owner:
-                if user.profile.user_permission != 'Administrator':
-                    return JsonResponse({'status': 401, 'success': False, 'message': 'You do not have permission'})
-                else:
-                    user = user.profile.owner
-
             data = request.data
             if 'code' not in data:
                 return JsonResponse({'status': 401, 'success': False, 'message': 'Parameter Error'})

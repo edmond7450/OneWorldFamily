@@ -25,9 +25,6 @@ class CardView(APIView):
     def get(self, request):
         try:
             user = request.user
-            if not user.profile.is_owner:
-                user = user.profile.owner
-
             profile = user.profile
 
             if not profile.stripe_customer_id:
@@ -67,12 +64,6 @@ class CardView(APIView):
 
         try:
             user = request.user
-            if not user.profile.is_owner:
-                if user.profile.user_permission != 'Administrator':
-                    return JsonResponse({'status': 401, 'success': False, 'message': 'You do not have permission'})
-                else:
-                    user = user.profile.owner
-
             data = request.data
             if 'coupon' in data:
                 if not Coupon.objects.filter(coupon_code=data['coupon'], user_id=None).exists():
@@ -243,12 +234,6 @@ class CardView(APIView):
 
         try:
             user = request.user
-            if not user.profile.is_owner:
-                if user.profile.user_permission != 'Administrator':
-                    return JsonResponse({'status': 401, 'success': False, 'message': 'You do not have permission'})
-                else:
-                    user = user.profile.owner
-
             data = request.data
 
             if data['addressLine2']:

@@ -94,9 +94,6 @@ class LoginView(TokenObtainPairView):
             update_last_login(None, user)
             save_history(user, 'Account', 'Log In')
 
-            if not user.profile.is_owner:
-                user = user.profile.owner
-
             # result.set_cookie(settings.JWT_AUTH_COOKIE, result.data['access'], max_age=1200, secure=True, httponly=True, samesite='lax')
             # result.set_cookie(settings.JWT_AUTH_REFRESH_COOKIE, result.data['refresh'], max_age=1200, secure=True, httponly=True, samesite='lax')
 
@@ -162,9 +159,6 @@ class OTPView(TokenObtainPairView):
 
             update_last_login(None, user)
             save_history(user, 'Account', 'Log In')
-
-            if not user.profile.is_owner:
-                user = user.profile.owner
 
             # result.set_cookie(settings.JWT_AUTH_COOKIE, result.data['access'], max_age=1200, secure=True, httponly=True, samesite='lax')
             # result.set_cookie(settings.JWT_AUTH_REFRESH_COOKIE, result.data['refresh'], max_age=1200, secure=True, httponly=True, samesite='lax')

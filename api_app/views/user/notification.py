@@ -16,9 +16,6 @@ class NotificationView(APIView):
 
         try:
             user = request.user
-            if not user.profile.is_owner:
-                user = user.profile.owner
-
             data = []
             count = Notification.objects.filter(user=user, is_shown=True).count()
 
@@ -53,12 +50,6 @@ class NotificationView(APIView):
     def post(self, request):
         try:
             user = request.user
-            if not user.profile.is_owner:
-                if user.profile.user_permission != 'Administrator':
-                    return JsonResponse({'status': 401, 'success': False, 'message': 'You do not have permission'})
-                else:
-                    user = user.profile.owner
-
             id = request.data['id']
 
             data = []
@@ -91,12 +82,6 @@ class NotificationView(APIView):
     def delete(self, request):
         try:
             user = request.user
-            if not user.profile.is_owner:
-                if user.profile.user_permission != 'Administrator':
-                    return JsonResponse({'status': 401, 'success': False, 'message': 'You do not have permission'})
-                else:
-                    user = user.profile.owner
-
             id = request.data['id']
 
             if id == -1:

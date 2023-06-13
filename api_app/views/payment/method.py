@@ -14,13 +14,8 @@ stripe.api_key = STRIPE['SECRET_KEY']
 class PaymentMethodView(APIView):
     def get(self, request):
         try:
-            user = request.user
-            if not user.profile.is_owner:
-                user = user.profile.owner
-
-            rows = PaymentMethod.objects.filter(user_id=user.id)
-
             data = []
+            rows = PaymentMethod.objects.filter(user_id=request.user.id)
             for row in rows:
                 if row.brand == 'PayPal' and not row.funding:
                     continue
@@ -56,12 +51,6 @@ class PaymentMethodView(APIView):
     def delete(self, request):
         try:
             user = request.user
-            if not user.profile.is_owner:
-                if user.profile.user_permission != 'Administrator':
-                    return JsonResponse({'status': 401, 'success': False, 'message': 'You do not have permission'})
-                else:
-                    user = user.profile.owner
-
             data = request.data
 
             if PaymentMethod.objects.filter(user_id=user.id).count() == 1:
