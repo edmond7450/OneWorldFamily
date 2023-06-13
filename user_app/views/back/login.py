@@ -16,11 +16,6 @@ from user_app.models.profile import USER_STATUS
 from user_app.models.security import Security
 from user_app.views.send_email import send_mail
 
-question_list = ["What was your first pet's name?",
-                 "What is your mother's maiden name?",
-                 "What is your favorite sport's team?",
-                 "What is your childhood best friend name?"]
-
 
 class LoginView(View):
     template_name = 'user/back/login.html'
@@ -41,42 +36,7 @@ class LoginView(View):
                 return JsonResponse({'status': 402, 'success': False, 'message': 'Your account is restricted'})
 
             security = Security.objects.get(user_id=user.id)
-            if profile.two_factor == 1:
-                if security.sms_counts >= 5:
-                    user.profile.status = USER_STATUS.RESTRICTED
-                    user.profile.save()
-                    return JsonResponse({'status': 403, 'success': False, 'message': 'Your account is restricted'})
-
-                security.sms_counts += 1
-                security.save()
-
-                if TWILIO.get('ACCOUNT_SID'):
-                    verify = Client(TWILIO['ACCOUNT_SID'], TWILIO['AUTH_TOKEN']).verify.v2.services(TWILIO['VERIFY_SID'])
-                    try:
-                        verify.verifications.create(to=profile.phone, channel='sms')
-                    except:
-                        return JsonResponse({'status': 404, 'success': False, 'message': "Can't send SMS to your phone number"})
-                else:
-                    phone_code = randrange(100000, 999999)
-                    security.otp = str(phone_code)
-                    security.updated_at = timezone.now()
-                    security.save()
-                    sdk = SDK(RINGCENTRAL['CLIENT_ID'], RINGCENTRAL['CLIENT_SECRET'], RINGCENTRAL['URL'])
-                    platform = sdk.platform()
-                    platform.login(RINGCENTRAL['PHONE_NUMBER'], RINGCENTRAL['EXTENSION'], RINGCENTRAL['PASSWORD'])
-                    builder = sdk.create_multipart_builder()
-
-                    builder.set_body({
-                        'from': {'phoneNumber': RINGCENTRAL['PHONE_NUMBER']},
-                        'to': [{'phoneNumber': profile.phone}],
-                        'text': f'Your One World Family verification code is: {phone_code}.'
-                    })
-                    request = builder.request('/account/~/extension/~/sms')
-                    response = platform.send_request(request)
-
-                return JsonResponse({'status': 200, 'message': 'send_phone_otp', 'phone': profile.phone[-2:]})
-
-            elif profile.two_factor == 2:
+            if profile.two_factor == 2:
                 try:
                     otp = randrange(100000, 999999)
                     security.otp = str(otp)
@@ -97,26 +57,6 @@ class LoginView(View):
                     return JsonResponse({'status': 405, 'message': repr(e)})
 
             else:
-                if profile.status == USER_STATUS.SECURITY_CHECKING:
-                    try:
-                        security = Security.objects.get(user_id=user.id)
-                        answer = ''
-                        if profile.security_question == 1:
-                            answer = security.pet_name
-                        elif profile.security_question == 2:
-                            answer = security.mother_maiden_name
-                        elif profile.security_question == 3:
-                            answer = security.sport_team
-                        elif profile.security_question == 4:
-                            answer = security.friend_name
-
-                        if answer:
-                            question = question_list[profile.security_question - 1]
-                            return JsonResponse({'status': 200, 'message': 'security_question', 'question': question})
-
-                    except:
-                        return JsonResponse({'status': 406, 'message': 'Security Question Verification Error'})
-
                 result = check_user_status(profile.status)
                 if result['status'] == 200:
                     auth.login(request, user)
@@ -153,42 +93,7 @@ def send_otp(request):
 
         security = Security.objects.get(user_id=user.id)
 
-        if request.POST['otp_class'] == 'send_phone_otp':
-            if security.sms_counts >= 5:
-                user.profile.status = USER_STATUS.RESTRICTED
-                user.profile.save()
-                return JsonResponse({'status': 403, 'message': 'Your account is restricted'})
-
-            security.sms_counts += 1
-            security.save()
-
-            if TWILIO.get('ACCOUNT_SID'):
-                verify = Client(TWILIO['ACCOUNT_SID'], TWILIO['AUTH_TOKEN']).verify.v2.services(TWILIO['VERIFY_SID'])
-                try:
-                    verify.verifications.create(to=user.profile.phone, channel='sms')
-                except:
-                    return JsonResponse({'status': 404, 'message': "Can't send SMS to your phone number"})
-            else:
-                phone_code = randrange(100000, 999999)
-                security.otp = str(phone_code)
-                security.updated_at = timezone.now()
-                security.save()
-                sdk = SDK(RINGCENTRAL['CLIENT_ID'], RINGCENTRAL['CLIENT_SECRET'], RINGCENTRAL['URL'])
-                platform = sdk.platform()
-                platform.login(RINGCENTRAL['PHONE_NUMBER'], RINGCENTRAL['EXTENSION'], RINGCENTRAL['PASSWORD'])
-                builder = sdk.create_multipart_builder()
-
-                builder.set_body({
-                    'from': {'phoneNumber': RINGCENTRAL['PHONE_NUMBER']},
-                    'to': [{'phoneNumber': user.profile.phone}],
-                    'text': f'Your One World Family verification code is: {phone_code}.'
-                })
-                request = builder.request('/account/~/extension/~/sms')
-                response = platform.send_request(request)
-
-            return JsonResponse({'status': 200, 'message': 'success'})
-
-        elif request.POST['otp_class'] == 'send_email_otp':
+        if request.POST['otp_class'] == 'send_email_otp':
             otp = randrange(100000, 999999)
             security.otp = str(otp)
             security.updated_at = timezone.now()
@@ -223,32 +128,7 @@ def check_otp(request):
 
         security = Security.objects.get(user_id=user.id)
 
-        if profile.two_factor == 1:
-            try:
-                if TWILIO.get('ACCOUNT_SID'):
-                    verify = Client(TWILIO['ACCOUNT_SID'], TWILIO['AUTH_TOKEN']).verify.v2.services(TWILIO['VERIFY_SID'])
-                    verification_check = verify.verification_checks.create(to=profile.phone, code=post_value['otp'])
-                    if verification_check.status != 'approved':
-                        raise Exception('pending')
-                else:
-                    if (timezone.now() - security.updated_at).seconds > 60 * 30:
-                        return JsonResponse({'status': 403, 'message': 'Verification code expired'})
-
-                    if security.otp != post_value['otp']:
-                        raise Exception('wrong')
-
-                security.sms_counts = 0
-                security.otp_attempt_counts = 0
-                security.save()
-            except:
-                security.otp_attempt_counts += 1
-                security.save()
-                if security.otp_attempt_counts > 3:
-                    sleep(security.otp_attempt_counts * 20)
-
-                return JsonResponse({'status': 404, 'message': 'Your code is incorrect.'})
-
-        else:
+        if profile.two_factor == 2:
             if (timezone.now() - security.updated_at).seconds > 60 * 30:
                 return JsonResponse({'status': 405, 'message': 'Verification code expired'})
 
@@ -263,25 +143,6 @@ def check_otp(request):
         security.otp_attempt_counts = 0
         security.save()
 
-        if profile.status == USER_STATUS.SECURITY_CHECKING:
-            try:
-                answer = ''
-                if profile.security_question == 1:
-                    answer = security.pet_name
-                elif profile.security_question == 2:
-                    answer = security.mother_maiden_name
-                elif profile.security_question == 3:
-                    answer = security.sport_team
-                elif profile.security_question == 4:
-                    answer = security.friend_name
-
-                if answer:
-                    question = question_list[profile.security_question - 1]
-                    return JsonResponse({'status': 200, 'message': 'security_question', 'question': question})
-
-            except:
-                return JsonResponse({'status': 407, 'message': 'Security Question Verification Error'})
-
         result = check_user_status(profile.status)
         if result['status'] == 200:
             auth.login(request, user)
@@ -289,47 +150,6 @@ def check_otp(request):
             save_history(user, 'Backend', 'Log In')
 
         return JsonResponse(result)
-
-    except Exception as e:
-        return JsonResponse({'status': 400, 'message': repr(e)})
-
-
-def check_security(request):
-    try:
-        post_value = request.POST
-        user = auth.authenticate(request, username=post_value['email'], password=post_value['password'])
-
-        if user is not None:
-            return JsonResponse({'status': 401, 'message': 'Email or password is incorrect'})
-
-        profile = user.profile
-        try:
-            security = Security.objects.get(user_id=user.id)
-            answer = ''
-            if profile.security_question == 1:
-                answer = security.pet_name
-            elif profile.security_question == 2:
-                answer = security.mother_maiden_name
-            elif profile.security_question == 3:
-                answer = security.sport_team
-            elif profile.security_question == 4:
-                answer = security.friend_name
-
-            if answer == post_value['answer']:
-                profile.security_question = 0
-                profile.save()
-
-                result = check_user_status(profile.status)
-                if result['status'] == 200:
-                    auth.login(request, user)
-                    request.session.set_expiry(0)
-                    save_history(user, 'Backend', 'Log In')
-
-                return JsonResponse(result)
-        except:
-            pass
-
-        return JsonResponse({'status': 402, 'message': 'Your answer is incorrect.'})
 
     except Exception as e:
         return JsonResponse({'status': 400, 'message': repr(e)})

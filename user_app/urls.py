@@ -7,7 +7,6 @@ urlpatterns = [
     path('login/', login.LoginView.as_view(), name='user_login'),
     path('send_otp/', login.send_otp, name='user_send_otp'),
     path('check_otp/', login.check_otp, name='user_check_otp'),
-    path('check_security/', login.check_security, name='user_check_security'),
     path('logout/', login.logout, name='user_logout'),
 
     path('forgot/', forgot.ForgotView.as_view(), name='user_forgot'),
