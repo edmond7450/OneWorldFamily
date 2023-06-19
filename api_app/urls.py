@@ -3,7 +3,7 @@ from dj_rest_auth.views import LogoutView
 from rest_framework_simplejwt.views import TokenRefreshView
 
 from .views import meta
-from .views.payment import invoice, order, method, stripe_card, stripe_webhook
+from .views.payment import invoice, method, stripe_card
 from .views.security import login, device
 from .views.user import signup, forgot, profile, setting, notification
 
@@ -37,7 +37,5 @@ urlpatterns = [
     path('payment/method/', method.PaymentMethodView.as_view(), name='api_payment_method'),
     path('card/', stripe_card.CardView.as_view(), name='api_stripe_card'),
     path('card/token/', stripe_card.CardTokenView.as_view(), name='api_stripe_card_token'),
-    path('stripe/webhook/', stripe_webhook.endpoint, name='stripe_webhook_endpoint'),
-    path('order/', order.OrderView.as_view(), name='api_stripe_order'),
     path('invoice/', invoice.InvoiceView.as_view(), name='api_invoice'),
 ]

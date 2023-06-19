@@ -21,7 +21,7 @@
                 <tr>
                     <td valign="bottom" style="height: 219px; padding-left: 88px;">
                         <a href="https://oneworldfamily.com">
-                            <img width="111" height="116" src="https://app.oneworldfamily.com/static/invoice_logo.png" style="height: 116px; width: 111px;">
+                            <img width="230" height="80" src="https://app.oneworldfamily.com/static/logo.png" style="height: 80px; width: 230px;">
                         </a>
                     </td>
                     <td align="right" style="width: 370px;">
@@ -95,436 +95,52 @@
             <table style="padding: 0 70px 0 80px; width: 100%; font-weight: normal;">
                 <tbody>
                 <tr>
-                    <td style="width: 40%;">
+                    <td colspan="2">
                         <h2 align="left" style="padding-bottom: 10px; font-size: 21px; color: #e28227; margin: 7px 0;">
                             Summary
                         </h2>
                     </td>
+                    <td style="width: 50%;"></td>
                 </tr>
-                {% if data.arrears %}
+                <tr style="color: #454545">
+                    <td><b>Tier Name</b></td>
+                    <td style="text-align: right;">{{ data.tier_name }}</td>
+                    <td></td>
+                </tr>
+                <tr style="color: #454545">
+                    <td><b>Price Per Tier</b></td>
+                    <td style="text-align: right;">${{ data.tier_price }}</td>
+                    <td></td>
+                </tr>
+                <tr style="color: #454545">
+                    <td><b>Tier Number</b></td>
+                    <td style="text-align: right;">{{ data.tier_number }}</td>
+                    <td></td>
+                </tr>
+                {% if data.donation %}
                     <tr style="color: #454545">
-                        <td><b>Costs Billed in Arrears</b></td>
-                        <td>
-                            {% if '-' not in data.arrears.arrearsTotalCost %}
-                                ${{ data.arrears.arrearsTotalCost }}
-                            {% else %}
-                                (${{ data.arrears.arrearsTotalCost|cut:'-' }})
-                            {% endif %}
-                        </td>
+                        <td><b>Donation</b></td>
+                        <td style="text-align: right;">${{ data.donation }}</td>
+                        <td></td>
                     </tr>
                 {% endif %}
-                <tr style="color: #454545">
-                    <td><b>Costs Billed in Advance</b></td>
-                    <td>${{ data.advance.advanceTotalCost }}</td>
-                </tr>
                 <!--<tr style="color: #e28227; font-weight: bold">
                     <td>Subtotal</td>
-                    <td>${{ data.subtotal }}</td>
+                    <td style="text-align: right;">${{ data.subtotal }}</td>
+                    <td></td>
                 </tr>
                 <tr style="color: #454545">
                     <td><b>Sales Tax</b></td>
-                    <td>${{ data.tax }}</td>
+                    <td style="text-align: right;">${{ data.tax }}</td>
+                    <td></td>
                 </tr>-->
                 <tr style="color: #e28227; font-weight: bold">
                     <td>Total</td>
-                    <td>${{ data.total }}</td>
-                </tr>
-                <tr>
-                    <td>
-                        <h2 style="padding: 7px 0; font-size: 21px; color: #e28227; margin: 7px 0; ">
-                            Detail
-                        </h2>
-                    </td>
+                    <td style="text-align: right;">${{ data.total }}</td>
+                    <td></td>
                 </tr>
                 </tbody>
             </table>
-
-            {% if data.arrears %}
-                <table style="padding: 0 70px 0 80px; width: 100%; font-weight: normal;">
-                    <tbody>
-                    <tr style="font-size: 16px">
-                        <td align="left" style="color: #e28227;">COSTS BILLED IN ARREARS</td>
-                        <!--<td style="color: #e28227; padding-left: 15px;">Cloud Costs</td>-->
-                    </tr>
-                    <tr>
-                        <td width="50%" align="left" style="color: #454545">
-                            <table align="left" style="width: 100%">
-                                <tbody>
-                                <tr>
-                                    <td align="left" style="font-weight: bold">Period</td>
-                                    <td align="right" style="letter-spacing: -0.2px;">{{ data.arrears.periodStartDate }} – {{ data.arrears.periodEndDate }}</td>
-                                </tr>
-                                <tr>
-                                    <td align="left" style="font-weight: bold; letter-spacing: -0.2px;">Number of Days in Cycle</td>
-                                    <td align="right">{{ data.arrears.daysCycle }}</td>
-                                </tr>
-                                <tr>
-                                    <td align="left" style="font-weight: bold">Daily Cost per Feed</td>
-                                    <td align="right">
-                                        ${{ data.arrears.dailyCostPerFeed }}
-                                        <span style="color: #908f8f">&nbsp; (${{ data.feedCost }} ÷ {{ data.arrears.daysCycle }} days)</span>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                        <td width="50%" align="left" style="padding-left: 14px; color: #454545;">
-                            <!--<table style="width: 100%">
-                                <tbody>
-                                <tr>
-                                    <td style="font-weight: bold">Cost per GB</td>
-                                    <td style="padding-left: 1.5rem; color: #454545">${{ data.arrears.perGBCost }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="font-weight: bold">Period end Storage Size</td>
-                                    <td style="padding-left: 1.5rem">{{ data.arrears.currentGB }}GB</td>
-                                </tr>
-                                <tr>
-                                    <td style="font-weight: bold">Total Storage Cost</td>
-                                    <td style="padding-left: 1.5rem; font-weight: bold;">
-                                        ${{ data.arrears.totalStorageCost }}
-                                        <span style="color: #908f8f; letter-spacing: -0.2px;">(${{ data.arrears.perGBCost }} x {{ data.arrears.currentGB }}GB)</span>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>-->
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-
-                {% if data.arrears.newFeeds %}
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="padding: 0 70px 0 80px; page-break-inside: avoid;">
-                        <tbody>
-                        <tr>
-                            <td width="100%" align="center">
-                                <table style="width: 100%; font-weight: normal;">
-                                    <tbody>
-                                    <tr>
-                                        <td></td>
-                                    </tr>
-                                    <tr style="background-color: #f7f8f8 !important; padding: 0 0 15px; border-radius: 20px; box-shadow: 2px 2px 4px #231f201a;"></tr>
-                                    </tbody>
-                                </table>
-                                <table style="width: 100%; box-shadow: 2px 2px 4px #231f201a;  background-color: #e28227; border-radius: 20px 20px 0 0;">
-                                    <tbody>
-                                    <tr>
-                                        <th width="100%" align="center" colspan="5" style="background-color: #e28227; color: white; border-radius: 15px 15px 0 0;">
-                                            <span style="font-size: 16px; text-align: center; line-height: 30px; font-weight: lighter;">New Feeds</span>
-                                        </th>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <table style="width: 100%; padding: 2px 20px; padding-bottom: 12px; background-color: #f7f8f8; border-radius: 0 0 20px 20px; box-shadow: 5px 5px 6px #231f201a;">
-                                    <tbody>
-                                    <tr style="color: #e28227; font-weight: bold;">
-                                        <th style="font-weight: bold; text-align: left">
-                                            Name
-                                        </th>
-                                        <th style="font-weight: bold; text-align: left">
-                                            Source
-                                        </th>
-                                        <td style="font-weight: bold; text-align: left">
-                                            Start Date
-                                        </td>
-                                        <th style="font-weight: bold; text-align: left">
-                                            Days Left in Cycle
-                                        </th>
-                                        <th style="font-weight: bold; text-align: left; padding-left: 18px;">
-                                            Cost
-                                        </th>
-                                    </tr>
-
-                                    {% for row in data.arrears.newFeeds %}
-                                        <tr style="color: #454545">
-                                            <td style="">{{ row.name }}</td>
-                                            <td style="">{{ row.provider }}</td>
-                                            <td style="white-space: nowrap;">{{ row.startDate }}</td>
-                                            <td style="">{{ row.daysLeft }}</td>
-                                            <td style=" text-align: start; padding-left: 20px;">${{ row.cost }}</td>
-                                        </tr>
-                                    {% endfor %}
-
-                                    <tr style="font-size: 8px">
-                                        <td colspan="5" style="border-bottom: 2px solid #e28227">
-                                            &nbsp;
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-weight: bold; color: #e28227" colspan="4" align="right">
-                                            Total New Feed Cost:
-                                        </td>
-                                        <td style="font-weight: bold; color: #676767" align="right">
-                                            ${{ data.arrears.totalNewCost }}
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                {% endif %}
-
-                {% if data.arrears.partialFeeds %}
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="padding: 0 70px 0 80px; page-break-inside: avoid;">
-                        <tbody>
-                        <tr>
-                            <td width="100%" align="center">
-                                <table style="width: 100%; font-weight: normal;">
-                                    <tbody>
-                                    <tr>
-                                        <td></td>
-                                    </tr>
-                                    <tr style="background-color: #f7f8f8 !important; padding: 0 0 15px; border-radius: 20px; box-shadow: 2px 2px 4px #231f201a;"></tr>
-                                    </tbody>
-                                </table>
-                                <table style="width: 100%; box-shadow: 2px 2px 4px #231f201a;  background-color: #e28227; border-radius: 20px 20px 0 0;">
-                                    <tbody>
-                                    <tr>
-                                        <th width="100%" align="center" colspan="6" style="background-color: #e28227; color: white; border-radius: 15px 15px 0 0;">
-                                            <span style="font-size: 16px; text-align: center; line-height: 30px; font-weight: lighter;">Partial Cycle</span>
-                                        </th>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <table style="width: 100%; padding: 2px 20px; padding-bottom: 12px; background-color: #f7f8f8; border-radius: 0 0 20px 20px; box-shadow: 5px 5px 6px #231f201a;">
-                                    <tbody>
-                                    <tr style="color: #e28227; font-weight: bold;">
-                                        <th width="22%" style="font-weight: bold; text-align: left">
-                                            Name
-                                        </th>
-                                        <th width="12%" style="font-weight: bold; text-align: left">
-                                            Source
-                                        </th>
-                                        <td width="20%" style="font-weight: bold; text-align: left">
-                                            Start Date
-                                        </td>
-                                        <td width="20%" style="font-weight: bold; text-align: left">
-                                            End Date
-                                        </td>
-                                        <th width="20%" style="font-weight: bold; text-align: left;">
-                                            Days Left in Cycle
-                                        </th>
-                                        <th width="6%" style="font-weight: bold; text-align: left;">
-                                            Cost
-                                        </th>
-                                    </tr>
-
-                                    {% for row in data.arrears.partialFeeds %}
-                                        <tr style="color: #454545">
-                                            <td width="22%" style="">{{ row.name }}</td>
-                                            <td width="12%" style="">{{ row.provider }}</td>
-                                            <td width="20%" style="">{{ row.startDate }}</td>
-                                            <td width="20%" style="">{{ row.endDate }}</td>
-                                            <td width="20%" style="">{{ row.daysLeft }}</td>
-                                            <td width="6%" style=" text-align: start;">${{ row.cost }}</td>
-                                        </tr>
-                                    {% endfor %}
-
-                                    <tr style="font-size: 8px">
-                                        <td width="100%" colspan="6" style="border-bottom: 2px solid #e28227">
-                                            &nbsp;
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-weight: bold; color: #e28227;padding-right: 20px;" colspan="5" align="right">
-                                            Total Partial Cycle Cost:
-                                        </td>
-                                        <td style="font-weight: bold; color: #676767;" align="right">
-                                            ${{ data.arrears.totalPartialCost }}
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                {% endif %}
-
-                {% if data.arrears.terminatedFeeds %}
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="padding: 0 70px 0 80px; page-break-inside: avoid;">
-                        <tbody>
-                        <tr>
-                            <td width="100%" align="center">
-                                <table style="width: 100%; font-weight: normal;">
-                                    <tbody>
-                                    <tr>
-                                        <td></td>
-                                    </tr>
-                                    <tr style="background-color: #f7f8f8 !important; padding: 0 0 15px; border-radius: 20px; box-shadow: 2px 2px 4px #231f201a;"></tr>
-                                    </tbody>
-                                </table>
-                                <table style="width: 100%; box-shadow: 2px 2px 4px #231f201a;  background-color: #e28227; border-radius: 20px 20px 0 0;">
-                                    <tbody>
-                                    <tr>
-                                        <th width="100%" align="center" colspan="5" style="background-color: #e28227; color: white; border-radius: 15px 15px 0 0;">
-                                            <span style="font-size: 16px; text-align: center; line-height: 30px; font-weight: lighter;">Credit for Terminated Feeds</span>
-                                        </th>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <table style="width: 100%; padding: 2px 20px; padding-bottom: 12px; background-color: #f7f8f8; border-radius: 0 0 20px 20px; box-shadow: 5px 5px 6px #231f201a;">
-                                    <tbody>
-                                    <tr style="color: #e28227; font-weight: bold;">
-                                        <th style="font-weight: bold; text-align: left">
-                                            Name
-                                        </th>
-                                        <th style="font-weight: bold; text-align: left">
-                                            Source
-                                        </th>
-                                        <td style="font-weight: bold; text-align: left">
-                                            End Date
-                                        </td>
-                                        <th style="font-weight: bold; text-align: left">
-                                            Days Left in Cycle
-                                        </th>
-                                        <th style="font-weight: bold; text-align: left; padding-left: 18px;">
-                                            Refund
-                                        </th>
-                                    </tr>
-
-                                    {% for row in data.arrears.terminatedFeeds %}
-                                        <tr style="color: #454545">
-                                            <td style="">{{ row.name }}</td>
-                                            <td style="">{{ row.provider }}</td>
-                                            <td style="white-space: nowrap;">{{ row.endDate }}</td>
-                                            <td style="">{{ row.daysLeft }}</td>
-                                            <td style=" text-align: start; padding-left: 20px;">(${{ row.cost }})</td>
-                                        </tr>
-                                    {% endfor %}
-
-                                    <tr style="font-size: 8px">
-                                        <td colspan="5" style="border-bottom: 2px solid #e28227">
-                                            &nbsp;
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-weight: bold; color: #e28227" colspan="4" align="right">
-                                            Total Credits:
-                                        </td>
-                                        <td style="font-weight: bold; color: #676767" align="right">
-                                            (${{ data.arrears.totalTerminatedCost }})
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                {% endif %}
-
-                <table width="100%" border="0" cellspacing="0" cellpadding="0" style="padding: 0 70px 0 80px;">
-                    <tbody>
-                    <tr>
-                        <td width="100%" align="center">
-                            <table width="100%" style="width: 100%;">
-                                <tbody>
-                                <tr style="font-weight: bold;">
-                                    <td colspan="3" style="padding-top: 25px;">
-                                        <span style="color: #e28227">Total Costs Billed in Arrears</span>
-                                        {% if '-' not in data.arrears.arrearsTotalCost %}
-                                            <span style="color: #454545"> &nbsp; ${{ data.arrears.arrearsTotalCost }} </span>
-                                        {% else %}
-                                            <span style="color: #454545"> &nbsp; (${{ data.arrears.arrearsTotalCost|cut:'-' }}) </span>
-                                        {% endif %}
-                                        <span style="color: #908f8f; font-weight: normal; padding-left: 6px;">
-                                            {% if data.arrears.totalStorageCost %}
-                                                {% if data.arrears.totalNewCost or data.arrears.totalPartialCost or data.arrears.totalTerminatedCost %}
-                                                    (${{ data.arrears.totalStorageCost }}
-                                                    {% if data.arrears.totalNewCost %}
-                                                        + ${{ data.arrears.totalNewCost }}
-                                                    {% endif %}
-                                                    {% if data.arrears.totalPartialCost %}
-                                                        + ${{ data.arrears.totalPartialCost }}
-                                                    {% endif %}
-                                                    {% if data.arrears.totalTerminatedCost %}
-                                                        - ${{ data.arrears.totalTerminatedCost }}
-                                                    {% endif %})
-                                                {% endif %}
-                                            {% elif data.arrears.totalNewCost and data.arrears.totalPartialCost or data.arrears.totalNewCost and data.arrears.totalTerminatedCost or data.arrears.totalPartialCost and data.arrears.totalTerminatedCost %}
-                                                {% if data.arrears.totalNewCost %}
-                                                    (${{ data.arrears.totalNewCost }}
-                                                    {% if data.arrears.totalPartialCost %}
-                                                        + ${{ data.arrears.totalPartialCost }}
-                                                    {% endif %}
-                                                    {% if data.arrears.totalTerminatedCost %}
-                                                        - ${{ data.arrears.totalTerminatedCost }}
-                                                    {% endif %})
-                                                {% else %}
-                                                    (${{ data.arrears.totalPartialCost }} - ${{ data.arrears.totalTerminatedCost }})
-                                                {% endif %}
-                                            {% endif %}
-                                        </span>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            {% endif %}
-
-            <table style="padding: 0 70px 0 80px; width: 100%; font-weight: normal; page-break-inside: avoid;">
-                <tbody>
-                <tr>
-                    <td style="width: 40%; padding-top: 14px; font-size: 16px; color: #e28227; line-height: 20px;">
-                        COSTS BILLED IN ADVANCE
-                    </td>
-                </tr>
-                <tr style="color: #454545">
-                    <td colspan="2">
-                        <b>Period: </b>&nbsp; {{ data.advance.periodStartDate }} – {{ data.advance.periodEndDate }}
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding-top: 15px; font-size: 14px; color: #454545;">
-                        Archiving Costs
-                    </td>
-                </tr>
-                <tr style="color: #454545; font-weight: bold;">
-                    <td>Base Cost</td>
-                    <td>${{ data.baseCost }}</td>
-                </tr>
-                <tr style="color: #454545;  font-weight: bold;">
-                    <td>Number of Feeds to be Archived</td>
-                    <td>{{ data.advance.numberFeeds }}</td>
-                </tr>
-                <tr style="color: #454545; ">
-                    <td style="font-weight: bold;">Archiving Cost</td>
-                    <td>
-                        <span style="color: gray; font-weight: bold">${{ data.advance.archivingCost }}</span>
-                        <span style="color: #908f8f; padding-left: 6px">(${{ data.feedCost }} x {{ data.advance.numberFeeds }} feeds)</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="color: #e28227; font-weight: bold">
-                        Total Costs Billed in Advance
-                    </td>
-                    <td style="color: #e28227; font-weight: bold">
-                        ${{ data.advance.advanceTotalCost }}
-                        <span style="color: #908f8f; font-weight: normal; padding-left: 6px;">(${{ data.baseCost }} + ${{ data.advance.archivingCost }})</span>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-
-            {% if data.isSecondInvoice %}
-                <table style="padding: 50px 70px 0 80px; width: 95%; font-weight: normal; page-break-inside: avoid;">
-                    <tbody>
-                    <tr style="color: #454545;  font-weight: bold; line-height: 1.5em;">
-                        <td>
-                            Your first invoice is only for the monthly amount. When you connect a new feed, the $6.00 cost per feed is added to the next invoice.
-                            Normally with new accounts, users will add many feeds just after they open their account. Because of this, your 2nd invoice may feel unusually high.
-                            Please let us know if you have questions.
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            {% endif %}
 
             <table style="padding: 0 70px 0 80px; width: 100%; font-weight: normal;">
                 <tbody>
@@ -535,12 +151,7 @@
                             <tr>
                                 <td align="center" style="text-align: center;">
                                     <p style="margin-top: 150px; text-align: center; line-height: 16px; color: #454545;">
-                                        Thank you for using One World Family. Unless we’ve notified you otherwise, this is a statement
-                                        explaining cost you have already paid through your automatic payment method.
-                                        <!--To change that method,
-                                        <a href="" style="color: #e28227; text-decoration-color: #e28227;">click here</a>.
-                                        If you wish to cancel your account,
-                                        <a href="" style="color: #e28227; text-decoration-color: #e28227;">click here</a>.-->
+                                        Welcome to One World Family. This is a statement explaining cost you have already paid through your payment method.<br/>
                                         Please see here for
                                         <a href="https://oneworldfamily.com/terms-of-service" style="color: #e28227; text-decoration-color: #e28227;">Terms of Service</a>.
                                     </p>

@@ -238,12 +238,6 @@ class ClientListView(ListView):
                 Security.objects.filter(user_id=user.id).delete()
                 OutstandingToken.objects.filter(user=user).delete()
 
-                try:
-                    archive_dir = settings.ARCHIVE_DIR.joinpath(str(user.id))
-                    shutil.rmtree(archive_dir)
-                except:
-                    pass
-
                 user.profile.delete()
                 user.delete()
 

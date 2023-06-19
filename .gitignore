@@ -2,6 +2,7 @@
 __pycache__/
 
 install/
+invoice/
 my_settings*.py
 
 media/images/users

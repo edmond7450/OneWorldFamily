@@ -45,7 +45,7 @@ class RegisterView(APIView):
             data = request.data
             username = data['email']
             email = data['email']
-            password = data['password']
+            phone = request.data['phone']
             first_name = data['firstName']
             last_name = data['lastName']
             invitation_code = data.get('invitationCode') if data.get('invitationCode') else ''
@@ -53,31 +53,37 @@ class RegisterView(APIView):
             return JsonResponse({'status': 401, 'success': False, 'message': 'Parameter Error'})
 
         try:
+            # phone = phonenumbers.format_number(phonenumbers.parse(phone, 'US'), phonenumbers.PhoneNumberFormat.NATIONAL)
+            phone = phonenumbers.format_number(phonenumbers.parse(phone), phonenumbers.PhoneNumberFormat.INTERNATIONAL)
+        except:
+            return JsonResponse({'status': 402, 'success': False, 'message': 'Phone Number is not valid'})
+
+        try:
             validate_email(email)
         except:
-            return JsonResponse({'status': 402, 'success': False, 'message': 'Email is not valid'})
+            return JsonResponse({'status': 403, 'success': False, 'message': 'Email is not valid'})
 
         if User.objects.filter(username=username, profile__status__gt=0).exists():
-            return JsonResponse({'status': 403, 'success': False, 'message': 'Email Already in Use with One World Family'})
+            return JsonResponse({'status': 404, 'success': False, 'message': 'Email Already in Use with One World Family'})
 
         if invitation_code and not Partner.objects.filter(code=invitation_code).exists():
-            return JsonResponse({'status': 404, 'success': False, 'message': 'Partner Code Error'})
+            return JsonResponse({'status': 405, 'success': False, 'message': 'Partner Code Error'})
 
         try:
             if User.objects.filter(username=username).exists():
                 user = User.objects.get(username=username)
                 user.first_name = first_name
                 user.last_name = last_name
-                user.password = make_password(password)
 
                 profile = user.profile
                 security = Security.objects.get(user_id=user.id)
             else:
-                user = User.objects.create_user(username=username, email=email, password=password, first_name=first_name, last_name=last_name, is_active=0)
+                user = User.objects.create_user(username=username, email=email, first_name=first_name, last_name=last_name, is_active=0)
 
                 profile = Profile.objects.create(id=user.id, user_id=user.id)
                 security = Security.objects.create(id=user.id, user_id=user.id)
 
+            profile.phone = phone
             profile.two_factor = 2
             profile.save()
 
@@ -183,8 +189,6 @@ class VerifyEmailView(APIView):
                 security.save()
 
                 if is_anonymous:
-                    user.is_active = 1
-                    user.save()
                     user.profile.status = USER_STATUS.VERIFIED
                     user.profile.save()
 
