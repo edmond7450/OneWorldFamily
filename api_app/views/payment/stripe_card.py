@@ -38,8 +38,16 @@ class CardView(APIView):
             donation = int(data['donation'])
             total = int(data['total'])
 
+            tier_checked = False
             tiers = json.loads(API_Meta.objects.get(meta_key='tier-cost').meta_value)
-            if int(tiers[tier_name]) * tier_number + donation != total:
+            for tier in tiers:
+                if tier['value'] == tier_name:
+                    if tier['price'] * tier_number + donation == total:
+                        tier_checked = True
+                        break
+                    else:
+                        raise Exception('Parameter Error')
+            if not tier_checked:
                 raise Exception('Parameter Error')
         except:
             return JsonResponse({'status': 401, 'success': False, 'message': 'Parameter Error'})
@@ -130,7 +138,7 @@ class CardView(APIView):
                     save_history(user, 'Critical', 'Stripe Payment', f'Different amount received: {payment_intent.amount_received}/{total * 100}')
             except stripe.error.CardError as e:
                 stripe.PaymentMethod.detach(payment_method.stripe_id)
-                return JsonResponse({'status': 406, 'success': False, 'message': e.user_message})
+                return JsonResponse({'status': 404, 'success': False, 'message': e.user_message})
 
             profile.payment_status = 'paid'
             profile.save()
@@ -165,7 +173,7 @@ class CardView(APIView):
             return JsonResponse({'status': 200, 'success': True, 'message': 'Payment Complete'})
 
         except stripe.error.CardError as e:
-            return JsonResponse({'status': 400, 'success': False, 'message': e.user_message})
+            return JsonResponse({'status': 405, 'success': False, 'message': e.user_message})
         except Exception as e:
             return JsonResponse({'status': 400, 'success': False, 'message': repr(e)})
 

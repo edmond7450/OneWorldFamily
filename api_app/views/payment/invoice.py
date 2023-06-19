@@ -76,17 +76,25 @@ def create_invoice(user_id, total, tax, tier_name, tier_number, donation, billin
 
     user = User.objects.get(id=user_id)
 
+    tier_checked = False
     tiers = json.loads(API_Meta.objects.get(meta_key='tier-cost').meta_value)
-    if int(tiers[tier_name]) * tier_number + donation != total:
+    for tier in tiers:
+        if tier['value'] == tier_name:
+            if tier['price'] * tier_number + donation == total:
+                tier_checked = True
+                break
+            else:
+                raise Exception(f"Total does not match. Total: {total}, Tier Name: {tier_name}, Tier Number: {tier_number}, Donation: {donation}")
+    if not tier_checked:
         raise Exception(f"Total does not match. Total: {total}, Tier Name: {tier_name}, Tier Number: {tier_number}, Donation: {donation}")
 
     data = {}
     data['tax'] = '%.2f' % tax
     data['tier_name'] = tier_name
+    data['tier_price'] = tier['price']
     data['tier_number'] = tier_number
     if donation > 0:
         data['donation'] = '{0:,.2f}'.format(donation)
-    data['subtotal'] = '{0:,.2f}'.format(int(tiers[tier_name]) * tier_number)
     data['total'] = '{0:,.2f}'.format(total)
 
     data['payer'] = {

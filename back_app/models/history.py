@@ -36,7 +36,7 @@ def save_history(user, category, action, comment=None):
         History.objects.create(user=user, category=category, action=action, comment=comment)
 
     if category == 'Critical':
-        send_mail(GMAIL_HOST_USER, LOG_RECIPIENT_ADDRESS, 'SharpArchive Error',
+        send_mail(GMAIL_HOST_USER, LOG_RECIPIENT_ADDRESS, 'OneWorldFamily Error',
                   f'Category: {category}\n'
                   f'Action: {action}\n'
                   f'Comment: {comment}')
