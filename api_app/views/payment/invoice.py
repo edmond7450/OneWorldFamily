@@ -91,7 +91,7 @@ def create_invoice(user_id, total, tax, tier_name, tier_number, donation, billin
     data = {}
     data['tax'] = '%.2f' % tax
     data['tier_name'] = tier_name
-    data['tier_price'] = tier['price']
+    data['tier_price'] = '{0:,.2f}'.format(tier['price'])
     data['tier_number'] = tier_number
     if donation > 0:
         data['donation'] = '{0:,.2f}'.format(donation)
@@ -124,11 +124,18 @@ def create_invoice(user_id, total, tax, tier_name, tier_number, donation, billin
     }
     pdfkit.from_string(sourceHtml, invoice_path, configuration=configuration, options=options)
 
-    sourceHtml = render_to_string('user/email/invoice.html', {'data': data})
-
-    subject = 'One World Family Invoice'
-    send_mail(GMAIL_HOST_USER, user.email, subject, sourceHtml, 'html')
-
+    # sourceHtml = render_to_string('user/email/invoice.html', {'data': data})
+    #
+    # subject = 'One World Family Invoice'
+    # send_mail(GMAIL_HOST_USER, user.email, subject, sourceHtml, 'html')
+    #
     # send_mail(GMAIL_HOST_USER, LOG_RECIPIENT_ADDRESS, subject, sourceHtml, 'html')
+
+    message = render_to_string('user/email/signup.html', {
+        'first_name': user.first_name.title(),
+        'year': timezone.now().year
+    })
+
+    send_mail(GMAIL_HOST_USER, user.email, 'Welcome to One World Family', message, 'html', [invoice_path])
 
     return invoice_number, invoice_path

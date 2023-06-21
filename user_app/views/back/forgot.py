@@ -1,22 +1,14 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from django.core.validators import validate_email
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
-from django.utils import timezone
 from django.views import View
-from random import randrange
-from ringcentral import SDK
-from time import sleep
-from twilio.rest import Client
 
-from my_settings import SITE_URL, GMAIL_HOST_USER, TWILIO, RINGCENTRAL
-from user_app.models.profile import USER_STATUS
-from user_app.models.security import Security
+from my_settings import SITE_URL, GMAIL_HOST_USER
 from user_app.views.send_email import send_mail
 
 
@@ -42,7 +34,7 @@ class ForgotView(View):
                     'reset_url': '/user' + reset_url,
                 })
 
-                send_mail(GMAIL_HOST_USER, user.email, 'Reset your SharpArchive password', message, 'html')
+                send_mail(GMAIL_HOST_USER, user.email, 'Reset your OneWorldFamily password', message, 'html')
 
                 return JsonResponse({'status': 200, 'message': 'success'})
 

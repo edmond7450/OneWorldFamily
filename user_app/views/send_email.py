@@ -9,6 +9,7 @@ from email.mime.base import MIMEBase
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from email.mime.application import MIMEApplication
 from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
@@ -92,18 +93,21 @@ class SendGmail:
             content_type = 'application/octet-stream'
         main_type, sub_type = content_type.split('/', 1)
         if main_type == 'text':
-            with open(file, 'rb'):
-                msg = MIMEText('r', _subtype=sub_type)
+            with open(file, 'r') as f:
+                msg = MIMEText(f.read(), _subtype=sub_type)
         elif main_type == 'image':
-            with open(file, 'rb'):
-                msg = MIMEImage('r', _subtype=sub_type)
+            with open(file, 'rb') as f:
+                msg = MIMEImage(f.read(), _subtype=sub_type)
         elif main_type == 'audio':
-            with open(file, 'rb'):
-                msg = MIMEAudio('r', _subtype=sub_type)
+            with open(file, 'rb') as f:
+                msg = MIMEAudio(f.read(), _subtype=sub_type)
+        elif main_type == 'application' and sub_type == 'pdf':
+            with open(file, 'rb') as f:
+                msg = MIMEApplication(f.read(), _subtype=sub_type)
         else:
-            with open(file, 'rb'):
+            with open(file, 'rb') as f:
                 msg = MIMEBase(main_type, sub_type)
-                msg.set_payload(file.read())
+                msg.set_payload(f.read())
         filename = os.path.basename(file)
         msg.add_header('Content-Disposition', 'attachment', filename=filename)
         return msg
@@ -126,12 +130,15 @@ class SendGmail:
             print('An error occurred: %s' % repr(e))
 
 
-def send_mail(sender, to, subject, message, content_subtype='plain'):
+def send_mail(sender, to, subject, message, content_subtype='plain', attachment_files=None):
     if isinstance(to, list):
         to = ', '.join(to)
 
     gmail = SendGmail()
     service = gmail.get_service()
     user_id = 'me'
-    msg = gmail.create_message(sender, to, subject, message, content_subtype)
+    if attachment_files:
+        msg = gmail.create_message_with_attachment(sender, to, subject, message, attachment_files, content_subtype)
+    else:
+        msg = gmail.create_message(sender, to, subject, message, content_subtype)
     gmail.send_message(service, user_id, msg)
